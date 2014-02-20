@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+OpenIDE-Module: csvlib
+OpenIDE-Module-Localizing-Bundle: csvlib/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+

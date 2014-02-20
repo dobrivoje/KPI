@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+OpenIDE-Module: excel
+OpenIDE-Module-Localizing-Bundle: excel/Bundle.properties
+OpenIDE-Module-Specification-Version: 1.0
+

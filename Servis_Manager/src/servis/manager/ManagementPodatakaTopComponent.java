@@ -6,11 +6,13 @@
 package servis.manager;
 
 import ERS.queries.ERSQuery;
+import Exceptions.ExcelSheetException;
 import com.dobrivoje.utilities.comboboxmodeli.FirmaComboBoxModel;
 import com.dobrivoje.utilities.comboboxmodeli.KompanijaComboBoxModel;
 import com.dobrivoje.utilities.comboboxmodeli.OrgJedComboBoxModel;
 import com.dobrivoje.utilities.comboboxmodeli.TipRadnikaComboBoxModel;
 import com.dobrivoje.utilities.datumi.DatumSelektor;
+import com.dobrivoje.utilities.excel.ExcelUtils;
 import com.dobrivoje.utilities.warnings.Display;
 import ent.Firma;
 import ent.Kompanija;
@@ -20,6 +22,9 @@ import ent.TipRadnika;
 import izvestaji.resursi.generatori.ReportGenerator;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Collection;
 import javax.persistence.EntityManager;
 import org.netbeans.api.settings.ConvertAsProperties;
@@ -32,6 +37,7 @@ import org.openide.windows.TopComponent;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.Utilities;
 import javax.persistence.RollbackException;
+import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
 import org.dobrivoje.javafx.generators.LineChartGenerator1;
 import servis.manager.QuickSearch.IRadnik;
@@ -80,6 +86,7 @@ public final class ManagementPodatakaTopComponent extends TopComponent
     private Kompanija kompanija_bind;
 
     public static final String PROP_KOMPANIJA_BIND = "kompanija_bind";
+    private File file;
 
     /**
      * Get the value of kompanija_bind
@@ -281,6 +288,7 @@ public final class ManagementPodatakaTopComponent extends TopComponent
         buttonGroup_Barkod = new javax.swing.ButtonGroup();
         buttonGroup_Radnici_Izvestaji = new javax.swing.ButtonGroup();
         buttonGroup_Radnik_Izvestaj = new javax.swing.ButtonGroup();
+        jFileChooser = new javax.swing.JFileChooser();
         jLabel_Naslov = new javax.swing.JLabel();
         jTP_DataManagement = new javax.swing.JTabbedPane();
         jPanel_Kompanija = new javax.swing.JPanel();
@@ -353,6 +361,10 @@ public final class ManagementPodatakaTopComponent extends TopComponent
         jSeparator5 = new javax.swing.JSeparator();
         jButton_Produktivnost_ZaPeriodu = new javax.swing.JButton();
         jLabel_Naslov3 = new javax.swing.JLabel();
+        jLabel_Naslov5 = new javax.swing.JLabel();
+        jButton_ExcelFileOpen = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         jPanel_Radnik = new javax.swing.JPanel();
         jTextField_Radnik_Ime = new javax.swing.JTextField();
         jTextField_Radnik_Prezime = new javax.swing.JTextField();
@@ -383,6 +395,9 @@ public final class ManagementPodatakaTopComponent extends TopComponent
         jRadioButton_Radnik_Analiza = new javax.swing.JRadioButton();
         jButton_Efikasnost_Radnika_Izvestaj = new javax.swing.JButton();
         jLabel_Naslov4 = new javax.swing.JLabel();
+
+        jFileChooser.setCurrentDirectory(new java.io.File("C:\\%temp%"));
+        jFileChooser.setDialogTitle(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jFileChooser.dialogTitle")); // NOI18N
 
         jLabel_Naslov.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jLabel_Naslov, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel_Naslov.text")); // NOI18N
@@ -891,6 +906,20 @@ public final class ManagementPodatakaTopComponent extends TopComponent
         jLabel_Naslov3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         org.openide.awt.Mnemonics.setLocalizedText(jLabel_Naslov3, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel_Naslov3.text")); // NOI18N
 
+        jLabel_Naslov5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        org.openide.awt.Mnemonics.setLocalizedText(jLabel_Naslov5, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel_Naslov5.text")); // NOI18N
+
+        org.openide.awt.Mnemonics.setLocalizedText(jButton_ExcelFileOpen, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_ExcelFileOpen.text")); // NOI18N
+        jButton_ExcelFileOpen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_ExcelFileOpenActionPerformed(evt);
+            }
+        });
+
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout jPanel_OrgJedLayout = new javax.swing.GroupLayout(jPanel_OrgJed);
         jPanel_OrgJed.setLayout(jPanel_OrgJedLayout);
         jPanel_OrgJedLayout.setHorizontalGroup(
@@ -899,45 +928,51 @@ public final class ManagementPodatakaTopComponent extends TopComponent
                 .addContainerGap()
                 .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
-                        .addComponent(jButton_Produktivnost_ZaPeriodu, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jLabel_Naslov3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
                         .addGap(2, 2, 2)
                         .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jSeparator5)
                             .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
                                 .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jSeparator5)
+                                    .addComponent(jLabel15)
                                     .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
                                         .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel15)
                                             .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
                                                 .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
-                                                        .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                        .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                            .addComponent(jTextField_ORGJED_Kompanija)
-                                                            .addComponent(jTextField_ORGJED_Firma)))
-                                                    .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
-                                                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                        .addGap(0, 0, Short.MAX_VALUE))
-                                                    .addComponent(jTextField_ORGJED_Naziv))
-                                                .addGap(8, 8, 8)
+                                                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jComboBox_ORGJED_Firma, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                    .addComponent(jComboBox_ORGJED_Kompanija, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                        .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(22, 22, 22))
+                                                    .addComponent(jTextField_ORGJED_Kompanija)
+                                                    .addComponent(jTextField_ORGJED_Firma)))
+                                            .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
+                                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addGap(0, 0, Short.MAX_VALUE))
+                                            .addComponent(jTextField_ORGJED_Naziv))
+                                        .addGap(8, 8, 8)
+                                        .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jComboBox_ORGJED_Firma, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jComboBox_ORGJED_Kompanija, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
                                 .addComponent(jTextField_ORGJED_Sifra, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(60, 60, 60)
                                 .addComponent(jCheckBox_ORGJED_Mehanika)
-                                .addContainerGap(342, Short.MAX_VALUE))))))
+                                .addGap(0, 332, Short.MAX_VALUE))))
+                    .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
+                        .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jLabel_Naslov3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jButton_Produktivnost_ZaPeriodu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
+                        .addGap(80, 80, 80)
+                        .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel_Naslov5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
+                                .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jButton_ExcelFileOpen, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap())
         );
         jPanel_OrgJedLayout.setVerticalGroup(
             jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -969,9 +1004,15 @@ public final class ManagementPodatakaTopComponent extends TopComponent
                 .addGap(39, 39, 39)
                 .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel_Naslov3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel_Naslov3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel_Naslov5, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton_Produktivnost_ZaPeriodu)
+                .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton_Produktivnost_ZaPeriodu)
+                    .addComponent(jButton_ExcelFileOpen))
+                .addGap(18, 18, 18)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
@@ -1607,6 +1648,32 @@ public final class ManagementPodatakaTopComponent extends TopComponent
         }
     }//GEN-LAST:event_jButton_Efikasnost_Radnika_IzvestajActionPerformed
 
+    private void jButton_ExcelFileOpenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ExcelFileOpenActionPerformed
+        // TODO add your handling code here:
+        int retVal = jFileChooser.showOpenDialog(this);
+
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            file = jFileChooser.getSelectedFile();
+
+            try {
+                
+                // ExcelUtils EU = ExcelUtils.getDafault(file.getAbsolutePath(), 1, 1);
+                // jTextArea1.setText(EU.toString());
+                jTextArea1.setText(file.getAbsolutePath());
+                
+                /*} catch (FileNotFoundException ex) {
+                Display.obavestenjeBaloncic("Greška.", "Fajl nije pronađen.", Display.TIP_OBAVESTENJA.GRESKA);
+                } catch (ExcelSheetException ex) {
+                Display.obavestenjeBaloncic("Greška.", "Sheet Excel fajla sa oidacima počinje sa 1.", Display.TIP_OBAVESTENJA.GRESKA);
+                } catch (IOException ex) {
+                Display.obavestenjeBaloncic("Greška.", ex.getMessage(), Display.TIP_OBAVESTENJA.GRESKA);
+                */
+            } catch (Exception e) {
+                Display.obavestenjeBaloncic("Greška.", e.getMessage(), Display.TIP_OBAVESTENJA.GRESKA);
+            }
+        }
+    }//GEN-LAST:event_jButton_ExcelFileOpenActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup_Barkod;
     private javax.swing.ButtonGroup buttonGroup_Radnici_Izvestaji;
@@ -1614,6 +1681,7 @@ public final class ManagementPodatakaTopComponent extends TopComponent
     private javax.swing.JButton jButton_Barkod;
     private javax.swing.JButton jButton_Efikasnost_Radnika_Izvestaj;
     private javax.swing.JButton jButton_Efikasnost_Servisa_Izvestaj;
+    private javax.swing.JButton jButton_ExcelFileOpen;
     private javax.swing.JButton jButton_FIRMA_IzmenaPodataka;
     private javax.swing.JButton jButton_FIRMA_Nova;
     private javax.swing.JButton jButton_KOMPANIJA_IzmenaPodataka;
@@ -1635,6 +1703,7 @@ public final class ManagementPodatakaTopComponent extends TopComponent
     private javax.swing.JComboBox jComboBox_ORGJED_Kompanija;
     private javax.swing.JComboBox jComboBox_RADNICI_OrgJed;
     private javax.swing.JComboBox jComboBox_RADNICI_TipRadnika;
+    private javax.swing.JFileChooser jFileChooser;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1664,6 +1733,7 @@ public final class ManagementPodatakaTopComponent extends TopComponent
     private javax.swing.JLabel jLabel_Naslov1;
     private javax.swing.JLabel jLabel_Naslov3;
     private javax.swing.JLabel jLabel_Naslov4;
+    private javax.swing.JLabel jLabel_Naslov5;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
@@ -1683,12 +1753,14 @@ public final class ManagementPodatakaTopComponent extends TopComponent
     private javax.swing.JRadioButton jRadioButton_Efikasnost_SveJedinice;
     private javax.swing.JRadioButton jRadioButton_Radnik_Analiza;
     private javax.swing.JRadioButton jRadioButton_Radnik_Clocking;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JTabbedPane jTP_DataManagement;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JTextField jTextField_DATUMDO;
     private javax.swing.JTextField jTextField_DATUMOD;
     private javax.swing.JTextField jTextField_FIRMA_Adresa;
