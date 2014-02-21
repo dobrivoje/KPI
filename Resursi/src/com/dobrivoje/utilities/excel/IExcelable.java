@@ -5,11 +5,13 @@
  */
 package com.dobrivoje.utilities.excel;
 
+import java.util.List;
+
 /**
  *
  * @author dobri
  */
-public interface IColumnMapping {
+public interface IExcelable {
 
-    public String[] getColumnNames();
+    public List<String> getColumns();
 }

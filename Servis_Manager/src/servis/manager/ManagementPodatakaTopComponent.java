@@ -6,13 +6,11 @@
 package servis.manager;
 
 import ERS.queries.ERSQuery;
-import Exceptions.ExcelSheetException;
 import com.dobrivoje.utilities.comboboxmodeli.FirmaComboBoxModel;
 import com.dobrivoje.utilities.comboboxmodeli.KompanijaComboBoxModel;
 import com.dobrivoje.utilities.comboboxmodeli.OrgJedComboBoxModel;
 import com.dobrivoje.utilities.comboboxmodeli.TipRadnikaComboBoxModel;
 import com.dobrivoje.utilities.datumi.DatumSelektor;
-import com.dobrivoje.utilities.excel.ExcelUtils;
 import com.dobrivoje.utilities.warnings.Display;
 import ent.Firma;
 import ent.Kompanija;
@@ -23,8 +21,6 @@ import izvestaji.resursi.generatori.ReportGenerator;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeSupport;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.Collection;
 import javax.persistence.EntityManager;
 import org.netbeans.api.settings.ConvertAsProperties;
@@ -40,6 +36,7 @@ import javax.persistence.RollbackException;
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
 import org.dobrivoje.javafx.generators.LineChartGenerator1;
+import org.openide.util.lookup.ServiceProvider;
 import servis.manager.QuickSearch.IRadnik;
 
 /**
@@ -944,11 +941,11 @@ public final class ManagementPodatakaTopComponent extends TopComponent
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                                 .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                     .addComponent(jTextField_ORGJED_Kompanija)
-                                                    .addComponent(jTextField_ORGJED_Firma)))
+                                                    .addComponent(jTextField_ORGJED_Firma)
+                                                    .addComponent(jTextField_ORGJED_Naziv)))
                                             .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
                                                 .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, Short.MAX_VALUE))
-                                            .addComponent(jTextField_ORGJED_Naziv))
+                                                .addGap(0, 0, Short.MAX_VALUE)))
                                         .addGap(8, 8, 8)
                                         .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jComboBox_ORGJED_Firma, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -956,8 +953,9 @@ public final class ManagementPodatakaTopComponent extends TopComponent
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
-                                .addComponent(jTextField_ORGJED_Sifra, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(60, 60, 60)
+                                .addGap(71, 71, 71)
+                                .addComponent(jTextField_ORGJED_Sifra, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jCheckBox_ORGJED_Mehanika)
                                 .addGap(0, 332, Short.MAX_VALUE))))
                     .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
@@ -1297,7 +1295,7 @@ public final class ManagementPodatakaTopComponent extends TopComponent
                             .addComponent(jCheckBox_Radnik_Aktivan)
                             .addComponent(jCheckBox_Radnik_Radnik)))
                     .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(4, 4, 4)
                 .addComponent(jLabel_Naslov4, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1656,18 +1654,18 @@ public final class ManagementPodatakaTopComponent extends TopComponent
             file = jFileChooser.getSelectedFile();
 
             try {
-                
+
                 // ExcelUtils EU = ExcelUtils.getDafault(file.getAbsolutePath(), 1, 1);
                 // jTextArea1.setText(EU.toString());
                 jTextArea1.setText(file.getAbsolutePath());
-                
+
                 /*} catch (FileNotFoundException ex) {
-                Display.obavestenjeBaloncic("Greška.", "Fajl nije pronađen.", Display.TIP_OBAVESTENJA.GRESKA);
-                } catch (ExcelSheetException ex) {
-                Display.obavestenjeBaloncic("Greška.", "Sheet Excel fajla sa oidacima počinje sa 1.", Display.TIP_OBAVESTENJA.GRESKA);
-                } catch (IOException ex) {
-                Display.obavestenjeBaloncic("Greška.", ex.getMessage(), Display.TIP_OBAVESTENJA.GRESKA);
-                */
+                 Display.obavestenjeBaloncic("Greška.", "Fajl nije pronađen.", Display.TIP_OBAVESTENJA.GRESKA);
+                 } catch (ExcelSheetException ex) {
+                 Display.obavestenjeBaloncic("Greška.", "Sheet Excel fajla sa oidacima počinje sa 1.", Display.TIP_OBAVESTENJA.GRESKA);
+                 } catch (IOException ex) {
+                 Display.obavestenjeBaloncic("Greška.", ex.getMessage(), Display.TIP_OBAVESTENJA.GRESKA);
+                 */
             } catch (Exception e) {
                 Display.obavestenjeBaloncic("Greška.", e.getMessage(), Display.TIP_OBAVESTENJA.GRESKA);
             }
@@ -1895,7 +1893,6 @@ public final class ManagementPodatakaTopComponent extends TopComponent
                 }
             }
         });
-
     }
 
     @Override

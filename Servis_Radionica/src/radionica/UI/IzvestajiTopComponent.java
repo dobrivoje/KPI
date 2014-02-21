@@ -92,7 +92,6 @@ public final class IzvestajiTopComponent extends TopComponent
         jPanel_Klijent1 = new javax.swing.JPanel();
         jRadioButton_Radnik_Clocking = new javax.swing.JRadioButton();
         jRadioButton_Radnik_Analiza = new javax.swing.JRadioButton();
-        jRadioButton_Radnik_Savetnici = new javax.swing.JRadioButton();
         jLabel10 = new javax.swing.JLabel();
         jButton_Efikasnost_Radnika_Izvestaj = new javax.swing.JButton();
 
@@ -149,13 +148,11 @@ public final class IzvestajiTopComponent extends TopComponent
         jPanel_Klijent1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(IzvestajiTopComponent.class, "IzvestajiTopComponent.jPanel_Klijent1.border.title"))); // NOI18N
 
         buttonGroup_Efikasnost.add(jRadioButton_Radnik_Clocking);
+        jRadioButton_Radnik_Clocking.setSelected(true);
         org.openide.awt.Mnemonics.setLocalizedText(jRadioButton_Radnik_Clocking, org.openide.util.NbBundle.getMessage(IzvestajiTopComponent.class, "IzvestajiTopComponent.jRadioButton_Radnik_Clocking.text")); // NOI18N
 
         buttonGroup_Efikasnost.add(jRadioButton_Radnik_Analiza);
         org.openide.awt.Mnemonics.setLocalizedText(jRadioButton_Radnik_Analiza, org.openide.util.NbBundle.getMessage(IzvestajiTopComponent.class, "IzvestajiTopComponent.jRadioButton_Radnik_Analiza.text")); // NOI18N
-
-        buttonGroup_Efikasnost.add(jRadioButton_Radnik_Savetnici);
-        org.openide.awt.Mnemonics.setLocalizedText(jRadioButton_Radnik_Savetnici, org.openide.util.NbBundle.getMessage(IzvestajiTopComponent.class, "IzvestajiTopComponent.jRadioButton_Radnik_Savetnici.text")); // NOI18N
 
         javax.swing.GroupLayout jPanel_Klijent1Layout = new javax.swing.GroupLayout(jPanel_Klijent1);
         jPanel_Klijent1.setLayout(jPanel_Klijent1Layout);
@@ -163,19 +160,17 @@ public final class IzvestajiTopComponent extends TopComponent
             jPanel_Klijent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel_Klijent1Layout.createSequentialGroup()
                 .addGroup(jPanel_Klijent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton_Radnik_Savetnici)
                     .addComponent(jRadioButton_Radnik_Clocking)
                     .addComponent(jRadioButton_Radnik_Analiza))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
         jPanel_Klijent1Layout.setVerticalGroup(
             jPanel_Klijent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_Klijent1Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Klijent1Layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(jRadioButton_Radnik_Clocking, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton_Radnik_Analiza, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(3, 3, 3)
-                .addComponent(jRadioButton_Radnik_Savetnici, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jRadioButton_Radnik_Analiza, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel10.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
@@ -290,9 +285,9 @@ public final class IzvestajiTopComponent extends TopComponent
                 .addComponent(jLabel10)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel_Klijent1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton_Efikasnost_Radnika_Izvestaj)
-                .addGap(18, 18, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, 2, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -335,20 +330,6 @@ public final class IzvestajiTopComponent extends TopComponent
                 Display.obavestenjeBaloncic("Greška.", e.getMessage(), Display.TIP_OBAVESTENJA.GRESKA);
             }
 
-        } else if (jRadioButton_Radnik_Savetnici.isSelected()) {
-            try {
-                new ReportGenerator()
-                        .generisanjeIzvestaja_SavetniciFinansijskiIzvestaj(
-                                ds.getYMDDatumOD(),
-                                ds.getYMDDatumDO()
-                        );
-
-            } catch (NullPointerException e) {
-                Display.obavestenjeBaloncic("Greška.", "Odaberite početni i krajni datum.",
-                        Display.TIP_OBAVESTENJA.GRESKA);
-            } catch (Exception ex) {
-                Display.obavestenjeBaloncic("Greška.", ex.getMessage(), Display.TIP_OBAVESTENJA.GRESKA);
-            }
         }
     }//GEN-LAST:event_jButton_Efikasnost_Radnika_IzvestajActionPerformed
 
@@ -367,7 +348,6 @@ public final class IzvestajiTopComponent extends TopComponent
     private javax.swing.JPanel jPanel_Klijent1;
     private javax.swing.JRadioButton jRadioButton_Radnik_Analiza;
     private javax.swing.JRadioButton jRadioButton_Radnik_Clocking;
-    private javax.swing.JRadioButton jRadioButton_Radnik_Savetnici;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;

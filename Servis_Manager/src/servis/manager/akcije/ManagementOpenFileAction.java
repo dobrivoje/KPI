@@ -31,7 +31,7 @@ public final class ManagementOpenFileAction implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         File file = new FileChooserBuilder("user-dir")
-                .setTitle("Otvori Excel Fajl")
+                .setTitle("Otvori Excel")
                 .setApproveText("Open")
                 .showOpenDialog();
 

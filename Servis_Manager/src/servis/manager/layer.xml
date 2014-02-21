@@ -8,7 +8,7 @@
                 <attr name="position" intvalue="90010"/>
             </file>
         </folder>
-    </folder> 
+    </folder>
     <folder name="QuickSearch">
         <folder name="Actions_hidden"/>
         <folder name="Recent_hidden"/>

@@ -5,13 +5,16 @@
  */
 package com.dobrivoje.utilities.excel;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
  * @author dobri
  */
-public class FakturisaneUslugeBean implements IColumnMapping {
+public class FakturisaneUslugeBean implements IExcelable {
 
     private String Radnik;
     private double Sati;
@@ -19,11 +22,15 @@ public class FakturisaneUslugeBean implements IColumnMapping {
     private Date DatumRacuna;
     private String ProfitniCentar;
 
+    // Nazivi kolona moraju biti identični kao navedenja polja iznad !!!
+    private static final String[] kolone = new String[]{"Radnik", "Sati", "RadniNalog", "DatumRacuna", "ProfitniCentar"};
+
     @Override
-    public String[] getColumnNames() {
-        return new String[]{"Radnik", "Sati", "RadniNalog", "DatumRacuna", "ProfitniCentar"};
+    public List<String> getColumns() {
+        return new ArrayList<>(Arrays.asList(kolone));
     }
 
+    //<editor-fold defaultstate="collapsed" desc="Konstruktori">
     public FakturisaneUslugeBean() {
     }
 
@@ -34,7 +41,9 @@ public class FakturisaneUslugeBean implements IColumnMapping {
         this.DatumRacuna = DatumRacuna;
         this.ProfitniCentar = ProfitniCentar;
     }
+//</editor-fold>
 
+    //<editor-fold defaultstate="collapsed" desc="Getters/setters">
     public String getRadnik() {
         return Radnik;
     }
@@ -74,6 +83,7 @@ public class FakturisaneUslugeBean implements IColumnMapping {
     public void setProfitniCentar(String ProfitniCentar) {
         this.ProfitniCentar = ProfitniCentar;
     }
+//</editor-fold>
 
     @Override
     public String toString() {
