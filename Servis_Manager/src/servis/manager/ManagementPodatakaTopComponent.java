@@ -1668,8 +1668,8 @@ public final class ManagementPodatakaTopComponent extends TopComponent
 
             try {
                 ExcelUtils EU = ExcelUtils.getDafault(file, 1, 1);
-                ERS.queries.ERSQuery.insertNoveFakturisaneUslugeExcel(EU.getExcelBeanList());
                 jTextArea1.setText(EU.toString());
+                ERS.queries.ERSQuery.insertNoveFakturisaneUslugeExcel(EU.getExcelBeanList());
             } catch (Exception e) {
                 Display.obavestenjeBaloncic("Greška.", e.getMessage(), Display.TIP_OBAVESTENJA.GRESKA);
             }
