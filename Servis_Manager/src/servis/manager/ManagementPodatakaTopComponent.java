@@ -10,7 +10,9 @@ import com.dobrivoje.utilities.comboboxmodeli.FirmaComboBoxModel;
 import com.dobrivoje.utilities.comboboxmodeli.KompanijaComboBoxModel;
 import com.dobrivoje.utilities.comboboxmodeli.OrgJedComboBoxModel;
 import com.dobrivoje.utilities.comboboxmodeli.TipRadnikaComboBoxModel;
+import com.dobrivoje.utilities.csv.CSVUtils;
 import com.dobrivoje.utilities.datumi.DatumSelektor;
+import com.dobrivoje.utilities.excel.ExcelUtils;
 import com.dobrivoje.utilities.warnings.Display;
 import ent.Firma;
 import ent.Kompanija;
@@ -36,7 +38,6 @@ import javax.persistence.RollbackException;
 import javax.swing.JFileChooser;
 import javax.swing.SwingUtilities;
 import org.dobrivoje.javafx.generators.LineChartGenerator1;
-import org.openide.util.lookup.ServiceProvider;
 import servis.manager.QuickSearch.IRadnik;
 
 /**
@@ -362,6 +363,7 @@ public final class ManagementPodatakaTopComponent extends TopComponent
         jButton_ExcelFileOpen = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jButton_ExcelFileOpen1 = new javax.swing.JButton();
         jPanel_Radnik = new javax.swing.JPanel();
         jTextField_Radnik_Ime = new javax.swing.JTextField();
         jTextField_Radnik_Prezime = new javax.swing.JTextField();
@@ -393,946 +395,957 @@ public final class ManagementPodatakaTopComponent extends TopComponent
         jButton_Efikasnost_Radnika_Izvestaj = new javax.swing.JButton();
         jLabel_Naslov4 = new javax.swing.JLabel();
 
-        jFileChooser.setCurrentDirectory(new java.io.File("C:\\%temp%"));
-        jFileChooser.setDialogTitle(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jFileChooser.dialogTitle")); // NOI18N
+        jFileChooser.setCurrentDirectory(new java.io.File("C:\\"));
+            jFileChooser.setDialogTitle(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jFileChooser.dialogTitle")); // NOI18N
 
-        jLabel_Naslov.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel_Naslov, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel_Naslov.text")); // NOI18N
+            jLabel_Naslov.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel_Naslov, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel_Naslov.text")); // NOI18N
 
-        jPanel_Kompanija.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+            jPanel_Kompanija.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jTextField_KOMPANIJA_Naziv.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_KOMPANIJA_Naziv.text")); // NOI18N
+            jTextField_KOMPANIJA_Naziv.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_KOMPANIJA_Naziv.text")); // NOI18N
 
-        jTextField_KOMPANIJA_Adresa.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_KOMPANIJA_Adresa.text")); // NOI18N
+            jTextField_KOMPANIJA_Adresa.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_KOMPANIJA_Adresa.text")); // NOI18N
 
-        jTextField_KOMPANIJA_Grad.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_KOMPANIJA_Grad.text")); // NOI18N
+            jTextField_KOMPANIJA_Grad.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_KOMPANIJA_Grad.text")); // NOI18N
 
-        jTextField_KOMPANIJA__Vlasnik.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_KOMPANIJA__Vlasnik.text")); // NOI18N
+            jTextField_KOMPANIJA__Vlasnik.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_KOMPANIJA__Vlasnik.text")); // NOI18N
 
-        jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+            jPanel6.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
-        jButton_KOMPANIJA_IzmenaPodataka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikonice/errors_warnings_info/warning-triangle.gif"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jButton_KOMPANIJA_IzmenaPodataka, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_KOMPANIJA_IzmenaPodataka.text")); // NOI18N
-        jButton_KOMPANIJA_IzmenaPodataka.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_KOMPANIJA_IzmenaPodatakaActionPerformed(evt);
-            }
-        });
+            jButton_KOMPANIJA_IzmenaPodataka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikonice/errors_warnings_info/warning-triangle.gif"))); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jButton_KOMPANIJA_IzmenaPodataka, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_KOMPANIJA_IzmenaPodataka.text")); // NOI18N
+            jButton_KOMPANIJA_IzmenaPodataka.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton_KOMPANIJA_IzmenaPodatakaActionPerformed(evt);
+                }
+            });
 
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel6Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jButton_KOMPANIJA_IzmenaPodataka)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
-                .addContainerGap(37, Short.MAX_VALUE)
-                .addComponent(jButton_KOMPANIJA_IzmenaPodataka)
-                .addGap(31, 31, 31))
-        );
+            javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+            jPanel6.setLayout(jPanel6Layout);
+            jPanel6Layout.setHorizontalGroup(
+                jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel6Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jButton_KOMPANIJA_IzmenaPodataka)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+            jPanel6Layout.setVerticalGroup(
+                jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                    .addContainerGap(37, Short.MAX_VALUE)
+                    .addComponent(jButton_KOMPANIJA_IzmenaPodataka)
+                    .addGap(31, 31, 31))
+            );
 
-        jLabel20.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel20, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel20.text")); // NOI18N
+            jLabel20.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel20, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel20.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel21, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel21.text")); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel21, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel21.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel24, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel24.text")); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel24, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel24.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel28, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel28.text")); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel28, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel28.text")); // NOI18N
 
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel29, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel29.text")); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel29, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel29.text")); // NOI18N
 
-        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel22, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel22.text")); // NOI18N
+            jLabel22.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel22, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel22.text")); // NOI18N
 
-        jPanel_Kompanija_DG.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-        jPanel_Kompanija_DG.setLayout(new java.awt.BorderLayout());
+            jPanel_Kompanija_DG.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+            jPanel_Kompanija_DG.setLayout(new java.awt.BorderLayout());
 
-        javax.swing.GroupLayout jPanel_KompanijaLayout = new javax.swing.GroupLayout(jPanel_Kompanija);
-        jPanel_Kompanija.setLayout(jPanel_KompanijaLayout);
-        jPanel_KompanijaLayout.setHorizontalGroup(
-            jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_KompanijaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel_Kompanija_DG, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
-                    .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jSeparator6)
-                        .addGroup(jPanel_KompanijaLayout.createSequentialGroup()
-                            .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jLabel20)
-                                .addGroup(jPanel_KompanijaLayout.createSequentialGroup()
-                                    .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                        .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
-                                        .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
-                                        .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addComponent(jTextField_KOMPANIJA_Naziv, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField_KOMPANIJA_Adresa, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField_KOMPANIJA_Grad, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jTextField_KOMPANIJA__Vlasnik, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGap(18, 18, 18)
-                            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
-        );
-        jPanel_KompanijaLayout.setVerticalGroup(
-            jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_KompanijaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel20)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_KompanijaLayout.createSequentialGroup()
-                        .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_KOMPANIJA_Naziv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_KOMPANIJA_Adresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_KOMPANIJA_Grad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_KOMPANIJA__Vlasnik, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel22)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel_Kompanija_DG, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        jTP_DataManagement.addTab(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jPanel_Kompanija.TabConstraints.tabTitle"), jPanel_Kompanija); // NOI18N
-
-        jPanel_Firma.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        jTextField_FIRMA_Kompanija.setEditable(false);
-
-        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${kompanija_bind.nazivKompanije}"), jTextField_FIRMA_Kompanija, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jTextField_FIRMA_Naziv.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_FIRMA_Naziv.text")); // NOI18N
-
-        jTextField_FIRMA_Grad.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_FIRMA_Grad.text")); // NOI18N
-
-        jTextField_FIRMA_Adresa.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_FIRMA_Adresa.text")); // NOI18N
-
-        jTextField_FIRMA_PostanskiBroj.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_FIRMA_PostanskiBroj.text")); // NOI18N
-
-        jTextField_FIRMA_PIB.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_FIRMA_PIB.text")); // NOI18N
-
-        jTextField_FIRMA_MATBROJ.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_FIRMA_MATBROJ.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox_FIRMA_Aktivna, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_FIRMA_Aktivna.text")); // NOI18N
-        jCheckBox_FIRMA_Aktivna.setToolTipText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_FIRMA_Aktivna.toolTipText")); // NOI18N
-
-        jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jButton_FIRMA_Nova.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikonice/ok.gif"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jButton_FIRMA_Nova, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_FIRMA_Nova.text")); // NOI18N
-        jButton_FIRMA_Nova.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_FIRMA_NovaActionPerformed(evt);
-            }
-        });
-
-        jButton_FIRMA_IzmenaPodataka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikonice/errors_warnings_info/warning-triangle.gif"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jButton_FIRMA_IzmenaPodataka, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_FIRMA_IzmenaPodataka.text")); // NOI18N
-        jButton_FIRMA_IzmenaPodataka.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_FIRMA_IzmenaPodatakaActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton_FIRMA_IzmenaPodataka, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton_FIRMA_Nova, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton_FIRMA_Nova)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_FIRMA_IzmenaPodataka)
-                .addContainerGap())
-        );
-
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel1.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel2.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel3.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel4.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel5.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel6, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel6.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel7, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel7.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel8, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel8.text")); // NOI18N
-
-        jPanel_Klijent.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jPanel_Klijent.border.title"))); // NOI18N
-
-        buttonGroup_Radnici_Izvestaji.add(jRadioButton_Efikasnost_SveJedinice);
-        jRadioButton_Efikasnost_SveJedinice.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(jRadioButton_Efikasnost_SveJedinice, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jRadioButton_Efikasnost_SveJedinice.text")); // NOI18N
-
-        buttonGroup_Radnici_Izvestaji.add(jRadioButton_Efikasnost_ElektroMehanika);
-        org.openide.awt.Mnemonics.setLocalizedText(jRadioButton_Efikasnost_ElektroMehanika, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jRadioButton_Efikasnost_ElektroMehanika.text")); // NOI18N
-
-        buttonGroup_Radnici_Izvestaji.add(jRadioButton_Efikasnost_Limarija);
-        org.openide.awt.Mnemonics.setLocalizedText(jRadioButton_Efikasnost_Limarija, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jRadioButton_Efikasnost_Limarija.text")); // NOI18N
-
-        javax.swing.GroupLayout jPanel_KlijentLayout = new javax.swing.GroupLayout(jPanel_Klijent);
-        jPanel_Klijent.setLayout(jPanel_KlijentLayout);
-        jPanel_KlijentLayout.setHorizontalGroup(
-            jPanel_KlijentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_KlijentLayout.createSequentialGroup()
-                .addGroup(jPanel_KlijentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton_Efikasnost_Limarija)
-                    .addComponent(jRadioButton_Efikasnost_SveJedinice)
-                    .addComponent(jRadioButton_Efikasnost_ElektroMehanika))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        jPanel_KlijentLayout.setVerticalGroup(
-            jPanel_KlijentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_KlijentLayout.createSequentialGroup()
-                .addComponent(jRadioButton_Efikasnost_SveJedinice, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton_Efikasnost_ElektroMehanika, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jRadioButton_Efikasnost_Limarija, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
-        );
-
-        org.openide.awt.Mnemonics.setLocalizedText(jButton_Efikasnost_Servisa_Izvestaj, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_Efikasnost_Servisa_Izvestaj.text")); // NOI18N
-        jButton_Efikasnost_Servisa_Izvestaj.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_Efikasnost_Servisa_IzvestajActionPerformed(evt);
-            }
-        });
-
-        jCheckBox_AKTIVNI_RADNICI.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jCheckBox_AKTIVNI_RADNICI.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox_AKTIVNI_RADNICI, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_AKTIVNI_RADNICI.text")); // NOI18N
-
-        jCheckBox_NEAKTIVNI_RADNICI.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jCheckBox_NEAKTIVNI_RADNICI.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox_NEAKTIVNI_RADNICI, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_NEAKTIVNI_RADNICI.text")); // NOI18N
-
-        jCheckBox_SAMO_RADNICI.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jCheckBox_SAMO_RADNICI.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox_SAMO_RADNICI, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_SAMO_RADNICI.text")); // NOI18N
-
-        jCheckBox_OSTALI_NALOZI.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jCheckBox_OSTALI_NALOZI.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox_OSTALI_NALOZI, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_OSTALI_NALOZI.text")); // NOI18N
-
-        jLabel_Naslov1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel_Naslov1, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel_Naslov1.text")); // NOI18N
-
-        jTextField_DATUMOD.setEditable(false);
-        jTextField_DATUMOD.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_DATUMOD.text")); // NOI18N
-
-        jTextField_DATUMDO.setEditable(false);
-        jTextField_DATUMDO.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_DATUMDO.text")); // NOI18N
-
-        jTextField_GodinaOD.setEditable(false);
-        jTextField_GodinaOD.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_GodinaOD.text")); // NOI18N
-
-        jTextField_GodinaDO.setEditable(false);
-        jTextField_GodinaDO.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_GodinaDO.text")); // NOI18N
-
-        javax.swing.GroupLayout jPanel_FirmaLayout = new javax.swing.GroupLayout(jPanel_Firma);
-        jPanel_Firma.setLayout(jPanel_FirmaLayout);
-        jPanel_FirmaLayout.setHorizontalGroup(
-            jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_FirmaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_FirmaLayout.createSequentialGroup()
-                        .addComponent(jSeparator1)
-                        .addContainerGap())
-                    .addGroup(jPanel_FirmaLayout.createSequentialGroup()
-                        .addComponent(jLabel_Naslov1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(270, 270, 270))
-                    .addComponent(jSeparator2)
-                    .addGroup(jPanel_FirmaLayout.createSequentialGroup()
-                        .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel_FirmaLayout.createSequentialGroup()
-                                .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField_DATUMDO, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
-                                    .addComponent(jTextField_DATUMOD))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField_GodinaOD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField_GodinaDO, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jButton_Efikasnost_Servisa_Izvestaj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jPanel_Klijent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addGroup(jPanel_FirmaLayout.createSequentialGroup()
-                                        .addComponent(jCheckBox_AKTIVNI_RADNICI, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
+            javax.swing.GroupLayout jPanel_KompanijaLayout = new javax.swing.GroupLayout(jPanel_Kompanija);
+            jPanel_Kompanija.setLayout(jPanel_KompanijaLayout);
+            jPanel_KompanijaLayout.setHorizontalGroup(
+                jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_KompanijaLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jPanel_Kompanija_DG, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
+                        .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jSeparator6)
+                            .addGroup(jPanel_KompanijaLayout.createSequentialGroup()
+                                .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel20)
+                                    .addGroup(jPanel_KompanijaLayout.createSequentialGroup()
+                                        .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                            .addComponent(jLabel24, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                                            .addComponent(jLabel21, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jLabel28, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                                            .addComponent(jLabel29, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE))
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jCheckBox_NEAKTIVNI_RADNICI))
-                                    .addComponent(jCheckBox_SAMO_RADNICI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jCheckBox_OSTALI_NALOZI, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                            .addComponent(jLabel1)
-                            .addGroup(jPanel_FirmaLayout.createSequentialGroup()
-                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_FIRMA_Kompanija, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel_FirmaLayout.createSequentialGroup()
-                                .addComponent(jLabel8)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_FIRMA_PostanskiBroj, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jCheckBox_FIRMA_Aktivna))
-                            .addGroup(jPanel_FirmaLayout.createSequentialGroup()
-                                .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
-                                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(jTextField_FIRMA_Grad, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jTextField_FIRMA_Adresa, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jPanel_FirmaLayout.createSequentialGroup()
-                                        .addComponent(jTextField_FIRMA_Naziv, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jTextField_FIRMA_PIB)
-                                            .addComponent(jTextField_FIRMA_MATBROJ)))
-                                    .addGroup(jPanel_FirmaLayout.createSequentialGroup()
-                                        .addGap(335, 335, 335)
-                                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
-        jPanel_FirmaLayout.setVerticalGroup(
-            jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_FirmaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_FirmaLayout.createSequentialGroup()
-                        .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jTextField_FIRMA_Kompanija, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_FIRMA_Naziv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel_FirmaLayout.createSequentialGroup()
-                        .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_FIRMA_PIB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_FIRMA_MATBROJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_FirmaLayout.createSequentialGroup()
-                        .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_FIRMA_Grad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_FIRMA_Adresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(6, 6, 6)
-                        .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_FIRMA_PostanskiBroj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBox_FIRMA_Aktivna)))
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(1, 1, 1)
-                .addComponent(jLabel_Naslov1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_FirmaLayout.createSequentialGroup()
-                        .addGap(7, 7, 7)
-                        .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField_DATUMOD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_GodinaOD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField_DATUMDO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_GodinaDO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(jPanel_Klijent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel_FirmaLayout.createSequentialGroup()
-                        .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jCheckBox_AKTIVNI_RADNICI)
-                            .addComponent(jCheckBox_NEAKTIVNI_RADNICI))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jCheckBox_SAMO_RADNICI)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jCheckBox_OSTALI_NALOZI)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_Efikasnost_Servisa_Izvestaj)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jTP_DataManagement.addTab(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jPanel_Firma.TabConstraints.tabTitle"), jPanel_Firma); // NOI18N
-
-        jPanel_OrgJed.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-
-        jTextField_ORGJED_Kompanija.setEditable(false);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${kompanija_bind.nazivKompanije}"), jTextField_ORGJED_Kompanija, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jComboBox_ORGJED_Kompanija.setModel(new KompanijaComboBoxModel());
-        jComboBox_ORGJED_Kompanija.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox_ORGJED_KompanijaActionPerformed(evt);
-            }
-        });
-
-        jTextField_ORGJED_Firma.setEditable(false);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${firma_bind.naziv}"), jTextField_ORGJED_Firma, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jComboBox_ORGJED_Firma.setModel(new FirmaComboBoxModel());
-        jComboBox_ORGJED_Firma.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox_ORGJED_FirmaActionPerformed(evt);
-            }
-        });
-
-        jTextField_ORGJED_Naziv.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_ORGJED_Naziv.text")); // NOI18N
-
-        jTextField_ORGJED_Sifra.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_ORGJED_Sifra.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox_ORGJED_Mehanika, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_ORGJED_Mehanika.text")); // NOI18N
-        jCheckBox_ORGJED_Mehanika.setToolTipText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_ORGJED_Mehanika.toolTipText")); // NOI18N
-
-        jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jButton_ORGJED_Nova.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikonice/ok.gif"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jButton_ORGJED_Nova, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_ORGJED_Nova.text")); // NOI18N
-        jButton_ORGJED_Nova.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_ORGJED_NovaActionPerformed(evt);
-            }
-        });
-
-        jButton_ORGJED_IzmenaPodataka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikonice/errors_warnings_info/warning-triangle.gif"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jButton_ORGJED_IzmenaPodataka, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_ORGJED_IzmenaPodataka.text")); // NOI18N
-        jButton_ORGJED_IzmenaPodataka.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_ORGJED_IzmenaPodatakaActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton_ORGJED_IzmenaPodataka, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton_ORGJED_Nova, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButton_ORGJED_Nova)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_ORGJED_IzmenaPodataka)
-                .addGap(20, 20, 20))
-        );
-
-        jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel15, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel15.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel16, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel16.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel17, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel17.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel18, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel18.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel19, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel19.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jButton_Produktivnost_ZaPeriodu, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_Produktivnost_ZaPeriodu.text")); // NOI18N
-        jButton_Produktivnost_ZaPeriodu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_Produktivnost_ZaPerioduActionPerformed(evt);
-            }
-        });
-
-        jLabel_Naslov3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel_Naslov3, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel_Naslov3.text")); // NOI18N
-
-        jLabel_Naslov5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel_Naslov5, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel_Naslov5.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jButton_ExcelFileOpen, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_ExcelFileOpen.text")); // NOI18N
-        jButton_ExcelFileOpen.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_ExcelFileOpenActionPerformed(evt);
-            }
-        });
-
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        javax.swing.GroupLayout jPanel_OrgJedLayout = new javax.swing.GroupLayout(jPanel_OrgJed);
-        jPanel_OrgJed.setLayout(jPanel_OrgJedLayout);
-        jPanel_OrgJedLayout.setHorizontalGroup(
-            jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator5)
-                            .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
-                                .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel15)
-                                    .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
-                                        .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
-                                                .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(jTextField_ORGJED_Kompanija)
-                                                    .addComponent(jTextField_ORGJED_Firma)
-                                                    .addComponent(jTextField_ORGJED_Naziv)))
-                                            .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
-                                                .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, Short.MAX_VALUE)))
-                                        .addGap(8, 8, 8)
-                                        .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(jComboBox_ORGJED_Firma, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(jComboBox_ORGJED_Kompanija, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
-                                .addGap(71, 71, 71)
-                                .addComponent(jTextField_ORGJED_Sifra, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jCheckBox_ORGJED_Mehanika)
-                                .addGap(0, 332, Short.MAX_VALUE))))
-                    .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
-                        .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(jLabel_Naslov3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jButton_Produktivnost_ZaPeriodu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
-                        .addGap(80, 80, 80)
-                        .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel_Naslov5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
-                                .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton_ExcelFileOpen, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 322, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
-                .addContainerGap())
-        );
-        jPanel_OrgJedLayout.setVerticalGroup(
-            jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel15)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
-                        .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel18)
-                            .addComponent(jTextField_ORGJED_Kompanija, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox_ORGJED_Kompanija, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_ORGJED_Firma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jComboBox_ORGJED_Firma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_ORGJED_Naziv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jTextField_ORGJED_Sifra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jCheckBox_ORGJED_Mehanika)))
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(39, 39, 39)
-                .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel_Naslov3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel_Naslov5, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton_Produktivnost_ZaPeriodu)
-                    .addComponent(jButton_ExcelFileOpen))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        jTP_DataManagement.addTab(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jPanel_OrgJed.TabConstraints.tabTitle"), jPanel_OrgJed); // NOI18N
-
-        jTextField_Radnik_Ime.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_Radnik_Ime.text")); // NOI18N
-
-        jTextField_Radnik_Prezime.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_Radnik_Prezime.text")); // NOI18N
-
-        jTextField_Radnik_OrgJed.setEditable(false);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${orgJed_bind.naziv}"), jTextField_Radnik_OrgJed, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jComboBox_RADNICI_OrgJed.setModel(new OrgJedComboBoxModel());
-        jComboBox_RADNICI_OrgJed.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox_RADNICI_OrgJedActionPerformed(evt);
-            }
-        });
-
-        jTextField_Radnik_TipRadnika.setEditable(false);
-
-        binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${tipRadnika_bind.naziv}"), jTextField_Radnik_TipRadnika, org.jdesktop.beansbinding.BeanProperty.create("text"));
-        bindingGroup.addBinding(binding);
-
-        jComboBox_RADNICI_TipRadnika.setModel(new TipRadnikaComboBoxModel());
-        jComboBox_RADNICI_TipRadnika.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox_RADNICI_TipRadnikaActionPerformed(evt);
-            }
-        });
-        jComboBox_RADNICI_TipRadnika.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
-            public void propertyChange(java.beans.PropertyChangeEvent evt) {
-                jComboBox_RADNICI_TipRadnikaPropertyChange(evt);
-            }
-        });
-
-        jTextField_Radnik_Sifra_INFSISTEM.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_Radnik_Sifra_INFSISTEM.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox_Radnik_Aktivan, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_Radnik_Aktivan.text")); // NOI18N
-        jCheckBox_Radnik_Aktivan.setToolTipText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_Radnik_Aktivan.toolTipText")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jCheckBox_Radnik_Radnik, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_Radnik_Radnik.text")); // NOI18N
-        jCheckBox_Radnik_Radnik.setToolTipText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_Radnik_Radnik.toolTipText")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel9, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel9.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel10, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel10.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel11, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel11.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel12, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel12.text")); // NOI18N
-
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel13, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel13.text")); // NOI18N
-
-        jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-
-        jButton_RADNIK_Novi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikonice/ok.gif"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jButton_RADNIK_Novi, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_RADNIK_Novi.text")); // NOI18N
-        jButton_RADNIK_Novi.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_RADNIK_NoviActionPerformed(evt);
-            }
-        });
-
-        jButton_RADNIK_IzmenaPodataka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikonice/errors_warnings_info/warning-triangle.gif"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jButton_RADNIK_IzmenaPodataka, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_RADNIK_IzmenaPodataka.text")); // NOI18N
-        jButton_RADNIK_IzmenaPodataka.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_RADNIK_IzmenaPodatakaActionPerformed(evt);
-            }
-        });
-
-        jButton_RADNIK_Brisanje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikonice/errors_warnings_info/error_circle.gif"))); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jButton_RADNIK_Brisanje, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_RADNIK_Brisanje.text")); // NOI18N
-        jButton_RADNIK_Brisanje.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_RADNIK_BrisanjeActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton_RADNIK_Novi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton_RADNIK_IzmenaPodataka, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton_RADNIK_Brisanje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(13, Short.MAX_VALUE))
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(7, 7, 7)
-                .addComponent(jButton_RADNIK_Novi)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_RADNIK_IzmenaPodataka)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton_RADNIK_Brisanje)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel14, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel14.text")); // NOI18N
-
-        jPanel_Barkod.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jPanel_Barkod.border.title"))); // NOI18N
-
-        buttonGroup_Barkod.add(jRadioButton_Barkod_Radnici);
-        jRadioButton_Barkod_Radnici.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(jRadioButton_Barkod_Radnici, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jRadioButton_Barkod_Radnici.text")); // NOI18N
-
-        buttonGroup_Barkod.add(jRadioButton_Barkod_Statusi);
-        org.openide.awt.Mnemonics.setLocalizedText(jRadioButton_Barkod_Statusi, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jRadioButton_Barkod_Statusi.text")); // NOI18N
-
-        javax.swing.GroupLayout jPanel_BarkodLayout = new javax.swing.GroupLayout(jPanel_Barkod);
-        jPanel_Barkod.setLayout(jPanel_BarkodLayout);
-        jPanel_BarkodLayout.setHorizontalGroup(
-            jPanel_BarkodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_BarkodLayout.createSequentialGroup()
-                .addGroup(jPanel_BarkodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton_Barkod_Radnici)
-                    .addComponent(jRadioButton_Barkod_Statusi))
-                .addContainerGap(39, Short.MAX_VALUE))
-        );
-        jPanel_BarkodLayout.setVerticalGroup(
-            jPanel_BarkodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_BarkodLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jRadioButton_Barkod_Radnici, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton_Barkod_Statusi, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        org.openide.awt.Mnemonics.setLocalizedText(jButton_Barkod, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_Barkod.text")); // NOI18N
-        jButton_Barkod.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_BarkodActionPerformed(evt);
-            }
-        });
-
-        jPanel_Klijent1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jPanel_Klijent1.border.title"))); // NOI18N
-
-        buttonGroup_Radnik_Izvestaj.add(jRadioButton_Radnik_Clocking);
-        jRadioButton_Radnik_Clocking.setSelected(true);
-        org.openide.awt.Mnemonics.setLocalizedText(jRadioButton_Radnik_Clocking, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jRadioButton_Radnik_Clocking.text")); // NOI18N
-
-        buttonGroup_Radnik_Izvestaj.add(jRadioButton_Radnik_Analiza);
-        org.openide.awt.Mnemonics.setLocalizedText(jRadioButton_Radnik_Analiza, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jRadioButton_Radnik_Analiza.text")); // NOI18N
-
-        javax.swing.GroupLayout jPanel_Klijent1Layout = new javax.swing.GroupLayout(jPanel_Klijent1);
-        jPanel_Klijent1.setLayout(jPanel_Klijent1Layout);
-        jPanel_Klijent1Layout.setHorizontalGroup(
-            jPanel_Klijent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_Klijent1Layout.createSequentialGroup()
-                .addGroup(jPanel_Klijent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_Klijent1Layout.createSequentialGroup()
-                        .addComponent(jRadioButton_Radnik_Analiza)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Klijent1Layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(jRadioButton_Radnik_Clocking)))
-                .addContainerGap())
-        );
-        jPanel_Klijent1Layout.setVerticalGroup(
-            jPanel_Klijent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_Klijent1Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jRadioButton_Radnik_Clocking, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jRadioButton_Radnik_Analiza, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
-
-        org.openide.awt.Mnemonics.setLocalizedText(jButton_Efikasnost_Radnika_Izvestaj, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_Efikasnost_Radnika_Izvestaj.text")); // NOI18N
-        jButton_Efikasnost_Radnika_Izvestaj.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_Efikasnost_Radnika_IzvestajActionPerformed(evt);
-            }
-        });
-
-        jLabel_Naslov4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        org.openide.awt.Mnemonics.setLocalizedText(jLabel_Naslov4, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel_Naslov4.text")); // NOI18N
-
-        javax.swing.GroupLayout jPanel_RadnikLayout = new javax.swing.GroupLayout(jPanel_Radnik);
-        jPanel_Radnik.setLayout(jPanel_RadnikLayout);
-        jPanel_RadnikLayout.setHorizontalGroup(
-            jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_RadnikLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_RadnikLayout.createSequentialGroup()
-                        .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel_Naslov4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(jPanel_RadnikLayout.createSequentialGroup()
-                                .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel14)
-                                    .addGroup(jPanel_RadnikLayout.createSequentialGroup()
-                                        .addComponent(jPanel_Klijent1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jPanel_Barkod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(20, 20, 20)))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel_RadnikLayout.createSequentialGroup()
-                        .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jSeparator3)
-                            .addGroup(jPanel_RadnikLayout.createSequentialGroup()
-                                .addComponent(jButton_Efikasnost_Radnika_Izvestaj, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jTextField_KOMPANIJA_Naziv, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextField_KOMPANIJA_Adresa, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextField_KOMPANIJA_Grad, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jTextField_KOMPANIJA__Vlasnik, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton_Barkod, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel_RadnikLayout.createSequentialGroup()
-                                .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addGroup(jPanel_RadnikLayout.createSequentialGroup()
-                                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 86, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap())
+            );
+            jPanel_KompanijaLayout.setVerticalGroup(
+                jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_KompanijaLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabel20)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel_KompanijaLayout.createSequentialGroup()
+                            .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_KOMPANIJA_Naziv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_KOMPANIJA_Adresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel28, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_KOMPANIJA_Grad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel_KompanijaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel29, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_KOMPANIJA__Vlasnik, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jLabel22)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jPanel_Kompanija_DG, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
+                    .addContainerGap())
+            );
+
+            jTP_DataManagement.addTab(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jPanel_Kompanija.TabConstraints.tabTitle"), jPanel_Kompanija); // NOI18N
+
+            jPanel_Firma.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+            jTextField_FIRMA_Kompanija.setEditable(false);
+
+            org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${kompanija_bind.nazivKompanije}"), jTextField_FIRMA_Kompanija, org.jdesktop.beansbinding.BeanProperty.create("text"));
+            bindingGroup.addBinding(binding);
+
+            jTextField_FIRMA_Naziv.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_FIRMA_Naziv.text")); // NOI18N
+
+            jTextField_FIRMA_Grad.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_FIRMA_Grad.text")); // NOI18N
+
+            jTextField_FIRMA_Adresa.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_FIRMA_Adresa.text")); // NOI18N
+
+            jTextField_FIRMA_PostanskiBroj.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_FIRMA_PostanskiBroj.text")); // NOI18N
+
+            jTextField_FIRMA_PIB.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_FIRMA_PIB.text")); // NOI18N
+
+            jTextField_FIRMA_MATBROJ.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_FIRMA_MATBROJ.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jCheckBox_FIRMA_Aktivna, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_FIRMA_Aktivna.text")); // NOI18N
+            jCheckBox_FIRMA_Aktivna.setToolTipText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_FIRMA_Aktivna.toolTipText")); // NOI18N
+
+            jPanel3.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+            jButton_FIRMA_Nova.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikonice/ok.gif"))); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jButton_FIRMA_Nova, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_FIRMA_Nova.text")); // NOI18N
+            jButton_FIRMA_Nova.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton_FIRMA_NovaActionPerformed(evt);
+                }
+            });
+
+            jButton_FIRMA_IzmenaPodataka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikonice/errors_warnings_info/warning-triangle.gif"))); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jButton_FIRMA_IzmenaPodataka, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_FIRMA_IzmenaPodataka.text")); // NOI18N
+            jButton_FIRMA_IzmenaPodataka.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton_FIRMA_IzmenaPodatakaActionPerformed(evt);
+                }
+            });
+
+            javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+            jPanel3.setLayout(jPanel3Layout);
+            jPanel3Layout.setHorizontalGroup(
+                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel3Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton_FIRMA_IzmenaPodataka, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton_FIRMA_Nova, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addContainerGap(13, Short.MAX_VALUE))
+            );
+            jPanel3Layout.setVerticalGroup(
+                jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton_FIRMA_Nova)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton_FIRMA_IzmenaPodataka)
+                    .addContainerGap())
+            );
+
+            jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel1, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel1.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel2, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel2.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel3, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel3.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel4, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel4.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel5, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel5.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel6, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel6.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel7, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel7.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel8, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel8.text")); // NOI18N
+
+            jPanel_Klijent.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jPanel_Klijent.border.title"))); // NOI18N
+
+            buttonGroup_Radnici_Izvestaji.add(jRadioButton_Efikasnost_SveJedinice);
+            jRadioButton_Efikasnost_SveJedinice.setSelected(true);
+            org.openide.awt.Mnemonics.setLocalizedText(jRadioButton_Efikasnost_SveJedinice, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jRadioButton_Efikasnost_SveJedinice.text")); // NOI18N
+
+            buttonGroup_Radnici_Izvestaji.add(jRadioButton_Efikasnost_ElektroMehanika);
+            org.openide.awt.Mnemonics.setLocalizedText(jRadioButton_Efikasnost_ElektroMehanika, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jRadioButton_Efikasnost_ElektroMehanika.text")); // NOI18N
+
+            buttonGroup_Radnici_Izvestaji.add(jRadioButton_Efikasnost_Limarija);
+            org.openide.awt.Mnemonics.setLocalizedText(jRadioButton_Efikasnost_Limarija, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jRadioButton_Efikasnost_Limarija.text")); // NOI18N
+
+            javax.swing.GroupLayout jPanel_KlijentLayout = new javax.swing.GroupLayout(jPanel_Klijent);
+            jPanel_Klijent.setLayout(jPanel_KlijentLayout);
+            jPanel_KlijentLayout.setHorizontalGroup(
+                jPanel_KlijentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_KlijentLayout.createSequentialGroup()
+                    .addGroup(jPanel_KlijentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jRadioButton_Efikasnost_Limarija)
+                        .addComponent(jRadioButton_Efikasnost_SveJedinice)
+                        .addComponent(jRadioButton_Efikasnost_ElektroMehanika))
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+            jPanel_KlijentLayout.setVerticalGroup(
+                jPanel_KlijentLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_KlijentLayout.createSequentialGroup()
+                    .addComponent(jRadioButton_Efikasnost_SveJedinice, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jRadioButton_Efikasnost_ElektroMehanika, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jRadioButton_Efikasnost_Limarija, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE))
+            );
+
+            org.openide.awt.Mnemonics.setLocalizedText(jButton_Efikasnost_Servisa_Izvestaj, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_Efikasnost_Servisa_Izvestaj.text")); // NOI18N
+            jButton_Efikasnost_Servisa_Izvestaj.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton_Efikasnost_Servisa_IzvestajActionPerformed(evt);
+                }
+            });
+
+            jCheckBox_AKTIVNI_RADNICI.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+            jCheckBox_AKTIVNI_RADNICI.setSelected(true);
+            org.openide.awt.Mnemonics.setLocalizedText(jCheckBox_AKTIVNI_RADNICI, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_AKTIVNI_RADNICI.text")); // NOI18N
+
+            jCheckBox_NEAKTIVNI_RADNICI.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+            jCheckBox_NEAKTIVNI_RADNICI.setSelected(true);
+            org.openide.awt.Mnemonics.setLocalizedText(jCheckBox_NEAKTIVNI_RADNICI, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_NEAKTIVNI_RADNICI.text")); // NOI18N
+
+            jCheckBox_SAMO_RADNICI.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+            jCheckBox_SAMO_RADNICI.setSelected(true);
+            org.openide.awt.Mnemonics.setLocalizedText(jCheckBox_SAMO_RADNICI, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_SAMO_RADNICI.text")); // NOI18N
+
+            jCheckBox_OSTALI_NALOZI.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+            jCheckBox_OSTALI_NALOZI.setSelected(true);
+            org.openide.awt.Mnemonics.setLocalizedText(jCheckBox_OSTALI_NALOZI, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_OSTALI_NALOZI.text")); // NOI18N
+
+            jLabel_Naslov1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel_Naslov1, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel_Naslov1.text")); // NOI18N
+
+            jTextField_DATUMOD.setEditable(false);
+            jTextField_DATUMOD.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_DATUMOD.text")); // NOI18N
+
+            jTextField_DATUMDO.setEditable(false);
+            jTextField_DATUMDO.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_DATUMDO.text")); // NOI18N
+
+            jTextField_GodinaOD.setEditable(false);
+            jTextField_GodinaOD.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_GodinaOD.text")); // NOI18N
+
+            jTextField_GodinaDO.setEditable(false);
+            jTextField_GodinaDO.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_GodinaDO.text")); // NOI18N
+
+            javax.swing.GroupLayout jPanel_FirmaLayout = new javax.swing.GroupLayout(jPanel_Firma);
+            jPanel_Firma.setLayout(jPanel_FirmaLayout);
+            jPanel_FirmaLayout.setHorizontalGroup(
+                jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_FirmaLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel_FirmaLayout.createSequentialGroup()
+                            .addComponent(jSeparator1)
+                            .addContainerGap())
+                        .addGroup(jPanel_FirmaLayout.createSequentialGroup()
+                            .addComponent(jLabel_Naslov1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGap(270, 270, 270))
+                        .addComponent(jSeparator2)
+                        .addGroup(jPanel_FirmaLayout.createSequentialGroup()
+                            .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(jPanel_FirmaLayout.createSequentialGroup()
+                                    .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTextField_DATUMDO, javax.swing.GroupLayout.DEFAULT_SIZE, 100, Short.MAX_VALUE)
+                                        .addComponent(jTextField_DATUMOD))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jTextField_GodinaOD, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextField_GodinaDO, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 77, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jButton_Efikasnost_Servisa_Izvestaj, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jPanel_Klijent, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addGroup(jPanel_FirmaLayout.createSequentialGroup()
+                                            .addComponent(jCheckBox_AKTIVNI_RADNICI, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jTextField_Radnik_Ime))
-                                        .addGroup(jPanel_RadnikLayout.createSequentialGroup()
-                                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jCheckBox_NEAKTIVNI_RADNICI))
+                                        .addComponent(jCheckBox_SAMO_RADNICI, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jCheckBox_OSTALI_NALOZI, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(jLabel1)
+                                .addGroup(jPanel_FirmaLayout.createSequentialGroup()
+                                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jTextField_FIRMA_Kompanija, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel_FirmaLayout.createSequentialGroup()
+                                    .addComponent(jLabel8)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jTextField_FIRMA_PostanskiBroj, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jCheckBox_FIRMA_Aktivna))
+                                .addGroup(jPanel_FirmaLayout.createSequentialGroup()
+                                    .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, 67, Short.MAX_VALUE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jTextField_FIRMA_Grad, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextField_FIRMA_Adresa, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGroup(jPanel_FirmaLayout.createSequentialGroup()
+                                            .addComponent(jTextField_FIRMA_Naziv, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jTextField_Radnik_Prezime, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(jPanel_RadnikLayout.createSequentialGroup()
+                                            .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jTextField_FIRMA_PIB)
+                                                .addComponent(jTextField_FIRMA_MATBROJ)))
+                                        .addGroup(jPanel_FirmaLayout.createSequentialGroup()
+                                            .addGap(335, 335, 335)
+                                            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                            .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            );
+            jPanel_FirmaLayout.setVerticalGroup(
+                jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_FirmaLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabel1)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel_FirmaLayout.createSequentialGroup()
+                            .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4)
+                                .addComponent(jTextField_FIRMA_Kompanija, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_FIRMA_Naziv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel_FirmaLayout.createSequentialGroup()
+                            .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_FIRMA_PIB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_FIRMA_MATBROJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel_FirmaLayout.createSequentialGroup()
+                            .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_FIRMA_Grad, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_FIRMA_Adresa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(6, 6, 6)
+                            .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_FIRMA_PostanskiBroj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jCheckBox_FIRMA_Aktivna)))
+                        .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(1, 1, 1)
+                    .addComponent(jLabel_Naslov1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel_FirmaLayout.createSequentialGroup()
+                            .addGap(7, 7, 7)
+                            .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextField_DATUMOD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_GodinaOD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextField_DATUMDO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_GodinaDO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jPanel_Klijent, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(jPanel_FirmaLayout.createSequentialGroup()
+                            .addGroup(jPanel_FirmaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jCheckBox_AKTIVNI_RADNICI)
+                                .addComponent(jCheckBox_NEAKTIVNI_RADNICI))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(jCheckBox_SAMO_RADNICI)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jCheckBox_OSTALI_NALOZI)))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton_Efikasnost_Servisa_Izvestaj)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 8, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+
+            jTP_DataManagement.addTab(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jPanel_Firma.TabConstraints.tabTitle"), jPanel_Firma); // NOI18N
+
+            jPanel_OrgJed.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+            jTextField_ORGJED_Kompanija.setEditable(false);
+
+            binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${kompanija_bind.nazivKompanije}"), jTextField_ORGJED_Kompanija, org.jdesktop.beansbinding.BeanProperty.create("text"));
+            bindingGroup.addBinding(binding);
+
+            jComboBox_ORGJED_Kompanija.setModel(new KompanijaComboBoxModel());
+            jComboBox_ORGJED_Kompanija.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jComboBox_ORGJED_KompanijaActionPerformed(evt);
+                }
+            });
+
+            jTextField_ORGJED_Firma.setEditable(false);
+
+            binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${firma_bind.naziv}"), jTextField_ORGJED_Firma, org.jdesktop.beansbinding.BeanProperty.create("text"));
+            bindingGroup.addBinding(binding);
+
+            jComboBox_ORGJED_Firma.setModel(new FirmaComboBoxModel());
+            jComboBox_ORGJED_Firma.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jComboBox_ORGJED_FirmaActionPerformed(evt);
+                }
+            });
+
+            jTextField_ORGJED_Naziv.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_ORGJED_Naziv.text")); // NOI18N
+
+            jTextField_ORGJED_Sifra.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_ORGJED_Sifra.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jCheckBox_ORGJED_Mehanika, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_ORGJED_Mehanika.text")); // NOI18N
+            jCheckBox_ORGJED_Mehanika.setToolTipText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_ORGJED_Mehanika.toolTipText")); // NOI18N
+
+            jPanel5.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+            jButton_ORGJED_Nova.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikonice/ok.gif"))); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jButton_ORGJED_Nova, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_ORGJED_Nova.text")); // NOI18N
+            jButton_ORGJED_Nova.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton_ORGJED_NovaActionPerformed(evt);
+                }
+            });
+
+            jButton_ORGJED_IzmenaPodataka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikonice/errors_warnings_info/warning-triangle.gif"))); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jButton_ORGJED_IzmenaPodataka, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_ORGJED_IzmenaPodataka.text")); // NOI18N
+            jButton_ORGJED_IzmenaPodataka.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton_ORGJED_IzmenaPodatakaActionPerformed(evt);
+                }
+            });
+
+            javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+            jPanel5.setLayout(jPanel5Layout);
+            jPanel5Layout.setHorizontalGroup(
+                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel5Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton_ORGJED_IzmenaPodataka, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton_ORGJED_Nova, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addContainerGap(13, Short.MAX_VALUE))
+            );
+            jPanel5Layout.setVerticalGroup(
+                jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButton_ORGJED_Nova)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton_ORGJED_IzmenaPodataka)
+                    .addGap(20, 20, 20))
+            );
+
+            jLabel15.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel15, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel15.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel16, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel16.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel17, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel17.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel18, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel18.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel19, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel19.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jButton_Produktivnost_ZaPeriodu, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_Produktivnost_ZaPeriodu.text")); // NOI18N
+            jButton_Produktivnost_ZaPeriodu.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton_Produktivnost_ZaPerioduActionPerformed(evt);
+                }
+            });
+
+            jLabel_Naslov3.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel_Naslov3, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel_Naslov3.text")); // NOI18N
+
+            jLabel_Naslov5.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel_Naslov5, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel_Naslov5.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jButton_ExcelFileOpen, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_ExcelFileOpen.text")); // NOI18N
+            jButton_ExcelFileOpen.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton_ExcelFileOpenActionPerformed(evt);
+                }
+            });
+
+            jTextArea1.setColumns(20);
+            jTextArea1.setRows(5);
+            jScrollPane1.setViewportView(jTextArea1);
+
+            org.openide.awt.Mnemonics.setLocalizedText(jButton_ExcelFileOpen1, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_ExcelFileOpen1.text")); // NOI18N
+            jButton_ExcelFileOpen1.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton_ExcelFileOpen1ActionPerformed(evt);
+                }
+            });
+
+            javax.swing.GroupLayout jPanel_OrgJedLayout = new javax.swing.GroupLayout(jPanel_OrgJed);
+            jPanel_OrgJed.setLayout(jPanel_OrgJedLayout);
+            jPanel_OrgJedLayout.setHorizontalGroup(
+                jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
+                            .addGap(2, 2, 2)
+                            .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jSeparator5)
+                                .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
+                                    .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel15)
+                                        .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
+                                            .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
+                                                    .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                        .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                        .addComponent(jTextField_ORGJED_Kompanija)
+                                                        .addComponent(jTextField_ORGJED_Firma)
+                                                        .addComponent(jTextField_ORGJED_Naziv)))
+                                                .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
+                                                    .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addGap(0, 0, Short.MAX_VALUE)))
+                                            .addGap(8, 8, 8)
+                                            .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(jComboBox_ORGJED_Firma, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                .addComponent(jComboBox_ORGJED_Kompanija, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                    .addComponent(jPanel5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
+                                    .addGap(71, 71, 71)
+                                    .addComponent(jTextField_ORGJED_Sifra, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jCheckBox_ORGJED_Mehanika)
+                                    .addGap(0, 332, Short.MAX_VALUE))))
+                        .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
+                            .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addComponent(jLabel_Naslov3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton_Produktivnost_ZaPeriodu, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
+                            .addGap(80, 80, 80)
+                            .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jLabel_Naslov5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
+                                    .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
+                                            .addComponent(jButton_ExcelFileOpen, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                            .addComponent(jButton_ExcelFileOpen1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 322, Short.MAX_VALUE))
+                                    .addGap(46, 46, 46)))))
+                    .addContainerGap())
+            );
+            jPanel_OrgJedLayout.setVerticalGroup(
+                jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jLabel15)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel_OrgJedLayout.createSequentialGroup()
+                            .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel18)
+                                .addComponent(jTextField_ORGJED_Kompanija, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBox_ORGJED_Kompanija, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_ORGJED_Firma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBox_ORGJED_Firma, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_ORGJED_Naziv, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel19, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_ORGJED_Sifra, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jCheckBox_ORGJED_Mehanika)))
+                        .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGap(39, 39, 39)
+                    .addComponent(jSeparator5, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel_Naslov3, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel_Naslov5, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addGroup(jPanel_OrgJedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton_Produktivnost_ZaPeriodu)
+                        .addComponent(jButton_ExcelFileOpen)
+                        .addComponent(jButton_ExcelFileOpen1))
+                    .addGap(18, 18, 18)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
+                    .addContainerGap())
+            );
+
+            jTP_DataManagement.addTab(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jPanel_OrgJed.TabConstraints.tabTitle"), jPanel_OrgJed); // NOI18N
+
+            jTextField_Radnik_Ime.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_Radnik_Ime.text")); // NOI18N
+
+            jTextField_Radnik_Prezime.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_Radnik_Prezime.text")); // NOI18N
+
+            jTextField_Radnik_OrgJed.setEditable(false);
+
+            binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${orgJed_bind.naziv}"), jTextField_Radnik_OrgJed, org.jdesktop.beansbinding.BeanProperty.create("text"));
+            bindingGroup.addBinding(binding);
+
+            jComboBox_RADNICI_OrgJed.setModel(new OrgJedComboBoxModel());
+            jComboBox_RADNICI_OrgJed.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jComboBox_RADNICI_OrgJedActionPerformed(evt);
+                }
+            });
+
+            jTextField_Radnik_TipRadnika.setEditable(false);
+
+            binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, this, org.jdesktop.beansbinding.ELProperty.create("${tipRadnika_bind.naziv}"), jTextField_Radnik_TipRadnika, org.jdesktop.beansbinding.BeanProperty.create("text"));
+            bindingGroup.addBinding(binding);
+
+            jComboBox_RADNICI_TipRadnika.setModel(new TipRadnikaComboBoxModel());
+            jComboBox_RADNICI_TipRadnika.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jComboBox_RADNICI_TipRadnikaActionPerformed(evt);
+                }
+            });
+            jComboBox_RADNICI_TipRadnika.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+                public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                    jComboBox_RADNICI_TipRadnikaPropertyChange(evt);
+                }
+            });
+
+            jTextField_Radnik_Sifra_INFSISTEM.setText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jTextField_Radnik_Sifra_INFSISTEM.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jCheckBox_Radnik_Aktivan, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_Radnik_Aktivan.text")); // NOI18N
+            jCheckBox_Radnik_Aktivan.setToolTipText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_Radnik_Aktivan.toolTipText")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jCheckBox_Radnik_Radnik, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_Radnik_Radnik.text")); // NOI18N
+            jCheckBox_Radnik_Radnik.setToolTipText(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jCheckBox_Radnik_Radnik.toolTipText")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel9, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel9.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel10, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel10.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel11, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel11.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel12, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel12.text")); // NOI18N
+
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel13, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel13.text")); // NOI18N
+
+            jPanel4.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+            jButton_RADNIK_Novi.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikonice/ok.gif"))); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jButton_RADNIK_Novi, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_RADNIK_Novi.text")); // NOI18N
+            jButton_RADNIK_Novi.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton_RADNIK_NoviActionPerformed(evt);
+                }
+            });
+
+            jButton_RADNIK_IzmenaPodataka.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikonice/errors_warnings_info/warning-triangle.gif"))); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jButton_RADNIK_IzmenaPodataka, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_RADNIK_IzmenaPodataka.text")); // NOI18N
+            jButton_RADNIK_IzmenaPodataka.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton_RADNIK_IzmenaPodatakaActionPerformed(evt);
+                }
+            });
+
+            jButton_RADNIK_Brisanje.setIcon(new javax.swing.ImageIcon(getClass().getResource("/ikonice/errors_warnings_info/error_circle.gif"))); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jButton_RADNIK_Brisanje, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_RADNIK_Brisanje.text")); // NOI18N
+            jButton_RADNIK_Brisanje.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton_RADNIK_BrisanjeActionPerformed(evt);
+                }
+            });
+
+            javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+            jPanel4.setLayout(jPanel4Layout);
+            jPanel4Layout.setHorizontalGroup(
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButton_RADNIK_Novi, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton_RADNIK_IzmenaPodataka, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton_RADNIK_Brisanje, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addContainerGap(13, Short.MAX_VALUE))
+            );
+            jPanel4Layout.setVerticalGroup(
+                jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGap(7, 7, 7)
+                    .addComponent(jButton_RADNIK_Novi)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton_RADNIK_IzmenaPodataka)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jButton_RADNIK_Brisanje)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            );
+
+            jLabel14.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel14, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel14.text")); // NOI18N
+
+            jPanel_Barkod.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jPanel_Barkod.border.title"))); // NOI18N
+
+            buttonGroup_Barkod.add(jRadioButton_Barkod_Radnici);
+            jRadioButton_Barkod_Radnici.setSelected(true);
+            org.openide.awt.Mnemonics.setLocalizedText(jRadioButton_Barkod_Radnici, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jRadioButton_Barkod_Radnici.text")); // NOI18N
+
+            buttonGroup_Barkod.add(jRadioButton_Barkod_Statusi);
+            org.openide.awt.Mnemonics.setLocalizedText(jRadioButton_Barkod_Statusi, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jRadioButton_Barkod_Statusi.text")); // NOI18N
+
+            javax.swing.GroupLayout jPanel_BarkodLayout = new javax.swing.GroupLayout(jPanel_Barkod);
+            jPanel_Barkod.setLayout(jPanel_BarkodLayout);
+            jPanel_BarkodLayout.setHorizontalGroup(
+                jPanel_BarkodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_BarkodLayout.createSequentialGroup()
+                    .addGroup(jPanel_BarkodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jRadioButton_Barkod_Radnici)
+                        .addComponent(jRadioButton_Barkod_Statusi))
+                    .addContainerGap(39, Short.MAX_VALUE))
+            );
+            jPanel_BarkodLayout.setVerticalGroup(
+                jPanel_BarkodLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_BarkodLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addComponent(jRadioButton_Barkod_Radnici, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jRadioButton_Barkod_Statusi, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap())
+            );
+
+            org.openide.awt.Mnemonics.setLocalizedText(jButton_Barkod, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_Barkod.text")); // NOI18N
+            jButton_Barkod.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton_BarkodActionPerformed(evt);
+                }
+            });
+
+            jPanel_Klijent1.setBorder(javax.swing.BorderFactory.createTitledBorder(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jPanel_Klijent1.border.title"))); // NOI18N
+
+            buttonGroup_Radnik_Izvestaj.add(jRadioButton_Radnik_Clocking);
+            jRadioButton_Radnik_Clocking.setSelected(true);
+            org.openide.awt.Mnemonics.setLocalizedText(jRadioButton_Radnik_Clocking, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jRadioButton_Radnik_Clocking.text")); // NOI18N
+
+            buttonGroup_Radnik_Izvestaj.add(jRadioButton_Radnik_Analiza);
+            org.openide.awt.Mnemonics.setLocalizedText(jRadioButton_Radnik_Analiza, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jRadioButton_Radnik_Analiza.text")); // NOI18N
+
+            javax.swing.GroupLayout jPanel_Klijent1Layout = new javax.swing.GroupLayout(jPanel_Klijent1);
+            jPanel_Klijent1.setLayout(jPanel_Klijent1Layout);
+            jPanel_Klijent1Layout.setHorizontalGroup(
+                jPanel_Klijent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_Klijent1Layout.createSequentialGroup()
+                    .addGroup(jPanel_Klijent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel_Klijent1Layout.createSequentialGroup()
+                            .addComponent(jRadioButton_Radnik_Analiza)
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel_Klijent1Layout.createSequentialGroup()
+                            .addGap(0, 0, Short.MAX_VALUE)
+                            .addComponent(jRadioButton_Radnik_Clocking)))
+                    .addContainerGap())
+            );
+            jPanel_Klijent1Layout.setVerticalGroup(
+                jPanel_Klijent1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_Klijent1Layout.createSequentialGroup()
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jRadioButton_Radnik_Clocking, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jRadioButton_Radnik_Analiza, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap())
+            );
+
+            org.openide.awt.Mnemonics.setLocalizedText(jButton_Efikasnost_Radnika_Izvestaj, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jButton_Efikasnost_Radnika_Izvestaj.text")); // NOI18N
+            jButton_Efikasnost_Radnika_Izvestaj.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    jButton_Efikasnost_Radnika_IzvestajActionPerformed(evt);
+                }
+            });
+
+            jLabel_Naslov4.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+            org.openide.awt.Mnemonics.setLocalizedText(jLabel_Naslov4, org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jLabel_Naslov4.text")); // NOI18N
+
+            javax.swing.GroupLayout jPanel_RadnikLayout = new javax.swing.GroupLayout(jPanel_Radnik);
+            jPanel_Radnik.setLayout(jPanel_RadnikLayout);
+            jPanel_RadnikLayout.setHorizontalGroup(
+                jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_RadnikLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel_RadnikLayout.createSequentialGroup()
+                            .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jLabel_Naslov4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(jPanel_RadnikLayout.createSequentialGroup()
+                                    .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel14)
+                                        .addGroup(jPanel_RadnikLayout.createSequentialGroup()
+                                            .addComponent(jPanel_Klijent1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(18, 18, 18)
+                                            .addComponent(jPanel_Barkod, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addGap(20, 20, 20)))
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(jPanel_RadnikLayout.createSequentialGroup()
+                            .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addComponent(jSeparator3)
+                                .addGroup(jPanel_RadnikLayout.createSequentialGroup()
+                                    .addComponent(jButton_Efikasnost_Radnika_Izvestaj, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(18, 18, 18)
+                                    .addComponent(jButton_Barkod, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGap(0, 0, Short.MAX_VALUE))
+                                .addGroup(jPanel_RadnikLayout.createSequentialGroup()
+                                    .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                             .addGroup(jPanel_RadnikLayout.createSequentialGroup()
-                                                .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextField_Radnik_Sifra_INFSISTEM))
+                                                .addComponent(jTextField_Radnik_Ime))
                                             .addGroup(jPanel_RadnikLayout.createSequentialGroup()
-                                                .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextField_Radnik_OrgJed, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                            .addGroup(jPanel_RadnikLayout.createSequentialGroup()
-                                                .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jTextField_Radnik_TipRadnika, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel_RadnikLayout.createSequentialGroup()
-                                                .addComponent(jCheckBox_Radnik_Aktivan)
-                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                                .addComponent(jCheckBox_Radnik_Radnik))
-                                            .addComponent(jComboBox_RADNICI_OrgJed, 0, 154, Short.MAX_VALUE)
-                                            .addComponent(jComboBox_RADNICI_TipRadnika, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addContainerGap())))
-        );
-        jPanel_RadnikLayout.setVerticalGroup(
-            jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel_RadnikLayout.createSequentialGroup()
-                .addGap(12, 12, 12)
-                .addComponent(jLabel14)
-                .addGap(9, 9, 9)
-                .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel_RadnikLayout.createSequentialGroup()
-                        .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField_Radnik_Ime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField_Radnik_Prezime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField_Radnik_OrgJed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel11)
-                            .addComponent(jComboBox_RADNICI_OrgJed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField_Radnik_TipRadnika, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12)
-                            .addComponent(jComboBox_RADNICI_TipRadnika, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jTextField_Radnik_Sifra_INFSISTEM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel13)
-                            .addComponent(jCheckBox_Radnik_Aktivan)
-                            .addComponent(jCheckBox_Radnik_Radnik)))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(4, 4, 4)
-                .addComponent(jLabel_Naslov4, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jPanel_Barkod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel_Klijent1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(8, 8, 8)
-                .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton_Efikasnost_Radnika_Izvestaj)
-                    .addComponent(jButton_Barkod))
-                .addGap(104, 104, 104))
-        );
+                                                .addComponent(jTextField_Radnik_Prezime, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addGroup(jPanel_RadnikLayout.createSequentialGroup()
+                                            .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                .addGroup(jPanel_RadnikLayout.createSequentialGroup()
+                                                    .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(jTextField_Radnik_Sifra_INFSISTEM))
+                                                .addGroup(jPanel_RadnikLayout.createSequentialGroup()
+                                                    .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(jTextField_Radnik_OrgJed, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                                .addGroup(jPanel_RadnikLayout.createSequentialGroup()
+                                                    .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(jTextField_Radnik_TipRadnika, javax.swing.GroupLayout.PREFERRED_SIZE, 192, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                            .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addGroup(jPanel_RadnikLayout.createSequentialGroup()
+                                                    .addComponent(jCheckBox_Radnik_Aktivan)
+                                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                    .addComponent(jCheckBox_Radnik_Radnik))
+                                                .addComponent(jComboBox_RADNICI_OrgJed, 0, 154, Short.MAX_VALUE)
+                                                .addComponent(jComboBox_RADNICI_TipRadnika, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addContainerGap())))
+            );
+            jPanel_RadnikLayout.setVerticalGroup(
+                jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel_RadnikLayout.createSequentialGroup()
+                    .addGap(12, 12, 12)
+                    .addComponent(jLabel14)
+                    .addGap(9, 9, 9)
+                    .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(jPanel_RadnikLayout.createSequentialGroup()
+                            .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextField_Radnik_Ime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel9))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextField_Radnik_Prezime, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel10))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextField_Radnik_OrgJed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel11)
+                                .addComponent(jComboBox_RADNICI_OrgJed, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextField_Radnik_TipRadnika, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel12)
+                                .addComponent(jComboBox_RADNICI_TipRadnika, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextField_Radnik_Sifra_INFSISTEM, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel13)
+                                .addComponent(jCheckBox_Radnik_Aktivan)
+                                .addComponent(jCheckBox_Radnik_Radnik)))
+                        .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(18, 18, 18)
+                    .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(4, 4, 4)
+                    .addComponent(jLabel_Naslov4, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jPanel_Barkod, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jPanel_Klijent1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGap(8, 8, 8)
+                    .addGroup(jPanel_RadnikLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jButton_Efikasnost_Radnika_Izvestaj)
+                        .addComponent(jButton_Barkod))
+                    .addGap(104, 104, 104))
+            );
 
-        jTP_DataManagement.addTab(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jPanel_Radnik.TabConstraints.tabTitle"), jPanel_Radnik); // NOI18N
+            jTP_DataManagement.addTab(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jPanel_Radnik.TabConstraints.tabTitle"), jPanel_Radnik); // NOI18N
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel_Naslov, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jTP_DataManagement)))
-        );
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel_Naslov, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTP_DataManagement)
-                .addContainerGap())
-        );
+            javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+            this.setLayout(layout);
+            layout.setHorizontalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel_Naslov, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jTP_DataManagement)))
+            );
+            layout.setVerticalGroup(
+                layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jLabel_Naslov, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addComponent(jTP_DataManagement)
+                    .addContainerGap())
+            );
 
-        bindingGroup.bind();
-    }// </editor-fold>//GEN-END:initComponents
+            bindingGroup.bind();
+        }// </editor-fold>//GEN-END:initComponents
 
     private void jButton_FIRMA_NovaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_FIRMA_NovaActionPerformed
         try {
@@ -1654,23 +1667,30 @@ public final class ManagementPodatakaTopComponent extends TopComponent
             file = jFileChooser.getSelectedFile();
 
             try {
-
-                // ExcelUtils EU = ExcelUtils.getDafault(file.getAbsolutePath(), 1, 1);
-                // jTextArea1.setText(EU.toString());
-                jTextArea1.setText(file.getAbsolutePath());
-
-                /*} catch (FileNotFoundException ex) {
-                 Display.obavestenjeBaloncic("Greška.", "Fajl nije pronađen.", Display.TIP_OBAVESTENJA.GRESKA);
-                 } catch (ExcelSheetException ex) {
-                 Display.obavestenjeBaloncic("Greška.", "Sheet Excel fajla sa oidacima počinje sa 1.", Display.TIP_OBAVESTENJA.GRESKA);
-                 } catch (IOException ex) {
-                 Display.obavestenjeBaloncic("Greška.", ex.getMessage(), Display.TIP_OBAVESTENJA.GRESKA);
-                 */
+                ExcelUtils EU = ExcelUtils.getDafault(file, 1, 1);
+                ERS.queries.ERSQuery.insertNoveFakturisaneUslugeExcel(EU.getExcelBeanList());
+                jTextArea1.setText(EU.toString());
             } catch (Exception e) {
                 Display.obavestenjeBaloncic("Greška.", e.getMessage(), Display.TIP_OBAVESTENJA.GRESKA);
             }
         }
     }//GEN-LAST:event_jButton_ExcelFileOpenActionPerformed
+
+    private void jButton_ExcelFileOpen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ExcelFileOpen1ActionPerformed
+        // TODO add your handling code here:
+        int retVal = jFileChooser.showOpenDialog(this);
+
+        if (retVal == JFileChooser.APPROVE_OPTION) {
+            file = jFileChooser.getSelectedFile();
+
+            try {
+                CSVUtils CSV = CSVUtils.getDafault(file, ';', 1);
+                jTextArea1.setText(CSV.toString());
+            } catch (Exception e) {
+                Display.obavestenjeBaloncic("Greška.", e.getMessage(), Display.TIP_OBAVESTENJA.GRESKA);
+            }
+        }
+    }//GEN-LAST:event_jButton_ExcelFileOpen1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup_Barkod;
@@ -1680,6 +1700,7 @@ public final class ManagementPodatakaTopComponent extends TopComponent
     private javax.swing.JButton jButton_Efikasnost_Radnika_Izvestaj;
     private javax.swing.JButton jButton_Efikasnost_Servisa_Izvestaj;
     private javax.swing.JButton jButton_ExcelFileOpen;
+    private javax.swing.JButton jButton_ExcelFileOpen1;
     private javax.swing.JButton jButton_FIRMA_IzmenaPodataka;
     private javax.swing.JButton jButton_FIRMA_Nova;
     private javax.swing.JButton jButton_KOMPANIJA_IzmenaPodataka;

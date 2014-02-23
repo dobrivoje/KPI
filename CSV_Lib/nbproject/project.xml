@@ -9,6 +9,7 @@
             <public-packages>
                 <package>au.com.bytecode.opencsv</package>
                 <package>au.com.bytecode.opencsv.bean</package>
+                <package>csvlib</package>
             </public-packages>
             <class-path-extension>
                 <runtime-relative-path>ext/opencsv-2.3.jar</runtime-relative-path>

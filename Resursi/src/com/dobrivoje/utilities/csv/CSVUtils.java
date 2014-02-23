@@ -4,87 +4,29 @@
  */
 package com.dobrivoje.utilities.csv;
 
-import au.com.bytecode.opencsv.CSVReader;
-import au.com.bytecode.opencsv.bean.ColumnPositionMappingStrategy;
-import au.com.bytecode.opencsv.bean.CsvToBean;
+import ERS.Beans.FakturisaneUsluge.FUCSVBean;
+import Exceptions.ExcelSheetException;
+import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.util.List;
 
 /**
  *
  * @author root
  */
-public class CSVUtils {
+public class CSVUtils extends CSVSingletonUtils<FUCSVBean> {
 
     private static CSVUtils instance;
-    //
-    private static String CSV_LokacijaFajla;
-    //
-    private static char CSV_Separator = ';';
-    private static final char CSV_Param = '\'';
-    private static int CSV_PreskakanjeLinija = 1;
-    //
-    private static CSVReader CVSReader;
-    private static final CsvToBean CVSToBean = new CsvToBean();
-    private static final ColumnPositionMappingStrategy cpms = new ColumnPositionMappingStrategy();
-    //
-    private static List<IColumnMapping> list;
 
-    protected CSVUtils(String CSV_LokacijaFajla, char CSV_Separator, int CSV_PreskakanjeLinija) throws FileNotFoundException {
-
-        init(CSV_LokacijaFajla, CSV_Separator, CSV_PreskakanjeLinija);
+    private CSVUtils(File file, char Separator, int PreskociBrLinija) throws FileNotFoundException, InstantiationException, IllegalAccessException {
+        super(file, Separator, PreskociBrLinija);
+        super.forClass(FUCSVBean.class);
     }
 
-    private static void init(String CSV_LokacijaFajla,
-            char CSV_Separator,
-            int CSV_PreskakanjeLinija) throws FileNotFoundException {
-
-        CSVUtils.CSV_LokacijaFajla = CSV_LokacijaFajla;
-        CSVUtils.CSV_Separator = CSV_Separator;
-        CSVUtils.CSV_PreskakanjeLinija = CSV_PreskakanjeLinija;
-
-        CVSReader = new CSVReader(
-                new FileReader(CSV_LokacijaFajla),
-                CSV_Separator,
-                CSV_Param,
-                CSV_PreskakanjeLinija);
+    public static CSVUtils getDafault(File File, char Separator, int PreskociLinije) throws ExcelSheetException, Exception {
+        return (instance == null ? instance = new CSVUtils(File, Separator, PreskociLinije) : instance);
     }
 
-    public static CSVUtils getDafault(String CSV_LokacijaFajla) throws FileNotFoundException {
-        init(CSV_LokacijaFajla, CSVUtils.CSV_Separator, CSVUtils.CSV_PreskakanjeLinija);
-
-        return instance = (instance == null
-                ? new CSVUtils(
-                        CSVUtils.CSV_LokacijaFajla,
-                        CSVUtils.CSV_Separator,
-                        CSVUtils.CSV_PreskakanjeLinija
-                )
-                : instance);
-    }
-
-    //<editor-fold defaultstate="collapsed" desc="Setters">
-    public static void setCSV_LokacijaFajla(String CSV_LokacijaFajla) {
-        CSVUtils.CSV_LokacijaFajla = CSV_LokacijaFajla;
-    }
-
-    public static void setCSV_Separator(char CSV_Separator) {
-        CSVUtils.CSV_Separator = CSV_Separator;
-    }
-
-    public static void setCSV_PreskakanjeLinija(int CSV_PreskakanjeLinija) {
-        CSVUtils.CSV_PreskakanjeLinija = CSV_PreskakanjeLinija;
-    }
-//</editor-fold>
-
-    public void setUpBean(IColumnMapping bean) {
-        cpms.setType(bean.getClass());
-        cpms.setColumnMapping(bean.getColumnNames());
-
-        list = CVSToBean.parse(cpms, CVSReader);
-    }
-
-    public List<IColumnMapping> getList() {
-        return list;
+    public static CSVUtils getDafault(File File) throws ExcelSheetException, Exception {
+        return (instance == null ? instance = new CSVUtils(File, ';', 1) : instance);
     }
 }

@@ -117,6 +117,7 @@
                 </test-type>
             </test-dependencies>
             <public-packages>
+                <package>ERS.FakturisaniNalozi</package>
                 <package>ERS.SearchProviders</package>
                 <package>ERS.SearchProviders.Radnik</package>
                 <package>ERS.SearchProviders.Sifarnik</package>

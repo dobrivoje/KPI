@@ -4,105 +4,68 @@
  */
 package com.dobrivoje.utilities.excel;
 
+import ERS.Beans.FakturisaneUsluge.FUExcelBean;
 import Exceptions.ExcelSheetException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.text.ParseException;
 import java.util.List;
+import jxl.Cell;
 import jxl.DateCell;
 import jxl.NumberCell;
-import jxl.Sheet;
-import jxl.Workbook;
 
 /**
  *
  * @author root
  */
-public class ExcelUtils {
-    
+public class ExcelUtils extends ExcelSingletonUtils<FUExcelBean> {
+
     private static ExcelUtils instance;
-    private static final List<IExcelable> ExelableBeanList = new ArrayList<>();
-    //
-    private static int PreskociBrLinija = 1;
-    //
-    private static Workbook Workbook;
-    private static Sheet Sheet;
 
-    //<editor-fold defaultstate="collapsed" desc="Konstruktori i inits">
-    protected ExcelUtils(File file, int PreskakanjeLinija, int RBr_Sheet_a) throws FileNotFoundException, IOException, Exception {
-        ExcelUtils.Workbook = Workbook.getWorkbook(file);
-        init(PreskakanjeLinija, RBr_Sheet_a);
+    private ExcelUtils(File file, int PreskakanjeLinija, int RBr_Sheet_a) throws FileNotFoundException, IOException, Exception {
+        super(file, PreskakanjeLinija, RBr_Sheet_a);
     }
-    
-    private static void init(int PreskakanjeLinija, int RBr_Sheet_a) throws FileNotFoundException, IOException, Exception {
-        ExcelUtils.PreskociBrLinija = PreskakanjeLinija;
-        ExcelUtils.Sheet = Workbook.getSheet(RBr_Sheet_a - 1);
-    }
-    //</editor-fold>
 
-    //<editor-fold defaultstate="collapsed" desc="Setters">
-    public static void setExcel_PreskakanjeLinija(int PreskakanjeLinija) {
-        ExcelUtils.PreskociBrLinija = PreskakanjeLinija;
-    }
-    
-    public static void setPreskakanjeLinija(int PreskakanjeLinija) {
-        ExcelUtils.PreskociBrLinija = PreskakanjeLinija;
-    }
-    
-    public static void setSheet(int sheet) throws ExcelSheetException {
-        if (sheet < 1) {
-            throw new ExcelSheetException("Sheet počinje od 1 pa na dalje.");
-        }
-    }
-    //</editor-fold>
-
-    //<editor-fold defaultstate="collapsed" desc="getDafault">
-    public static ExcelUtils getDafault(File File, int PreskociLinije, int Sheet_RBr)
-            throws FileNotFoundException, IOException, ExcelSheetException, Exception {
-        
+    public static ExcelUtils getDafault(File File, int PreskociLinije, int Sheet_RBr) throws ExcelSheetException, Exception {
         if (Sheet_RBr < 1) {
-            throw new ExcelSheetException("Sheet počinje od 1 pa na dajje.");
+            throw new ExcelSheetException("Sheet počinje od 1 pa na dalje.");
         } else {
             return (instance == null ? instance = new ExcelUtils(File, PreskociLinije, Sheet_RBr) : instance);
         }
     }
-    
-    public static ExcelUtils getDafault(File File)
-            throws FileNotFoundException, IOException, ExcelSheetException, Exception {
-        
-        return (instance == null ? instance = new ExcelUtils(File, 1, 1) : instance);
+
+    public static ExcelUtils getDafault(File File) throws ExcelSheetException, Exception {
+        return getDafault(File, 1, 1);
     }
-//</editor-fold>
 
-    public List<IExcelable> getBeanList() {
-        FakturisaneUslugeBean fuTmp;
-        
-        for (int vrsta = ExcelUtils.PreskociBrLinija; vrsta < ExcelUtils.Sheet.getRows(); vrsta++) {
-            fuTmp = new FakturisaneUslugeBean();
-
-            fuTmp.setRadnik(ExcelUtils.Sheet.getCell(0, vrsta).getContents());
-            fuTmp.setSati(((NumberCell) ExcelUtils.Sheet.getCell(1, vrsta)).getValue());
-            fuTmp.setRadniNalog(ExcelUtils.Sheet.getCell(2, vrsta).getContents());
-            fuTmp.setDatumRacuna(((DateCell) ExcelUtils.Sheet.getCell(3, vrsta)).getDate());
-            fuTmp.setProfitniCentar(ExcelUtils.Sheet.getCell(4, vrsta).getContents());
-            
-            ExelableBeanList.add(fuTmp);
-        }
-        // }
-
-        return ExelableBeanList;
-    }
-    
     @Override
-    public String toString() {
-        int rb = 0;
-        String tmp = null;
-        
-        for (IExcelable fb : getBeanList()) {
-            tmp += (++rb) + ".  " + ((FakturisaneUslugeBean) fb).toString() + '\n';
+    public List<FUExcelBean> getExcelBeanList() throws ParseException {
+        FUExcelBean fuTmp;
+        Cell datum;
+
+        for (int vrsta = PreskociBrLinija; vrsta < Sheet.getRows(); vrsta++) {
+            fuTmp = new FUExcelBean();
+
+            fuTmp.setRadnik(Sheet.getCell(0, vrsta).getContents());
+            fuTmp.setSati(((NumberCell) Sheet.getCell(1, vrsta)).getValue());
+            fuTmp.setRadniNalog(Sheet.getCell(2, vrsta).getContents());
+
+            /*
+             datum = Sheet.getCell(3, vrsta);
+             if (datum.getType() == CellType.LABEL) {
+             fuTmp.setDatumRacuna(datum.getContents());
+             } else if (datum.getType() == CellType.DATE) {
+             fuTmp.setDatumRacuna(((DateCell) datum).getDate());
+             }
+             */
+            fuTmp.setDatumRacuna(((DateCell) Sheet.getCell(3, vrsta)).getDate());
+
+            fuTmp.setProfitniCentar(Sheet.getCell(4, vrsta).getContents());
+
+            ExcelBeanList.add(fuTmp);
         }
-        
-        return tmp;
+
+        return ExcelBeanList;
     }
 }
