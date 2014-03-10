@@ -15,7 +15,9 @@ import com.dobrivoje.utilities.warnings.Display;
 import ent.Firma;
 import ent.Kompanija;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import node_klase.firma.AktivnaFirmaChildFactory;
 import node_klase.firma.AktivnaFirmaZaDatumChildFactory;
 import node_klase.firma.FirmaPoIDChildFactory;
@@ -58,16 +60,17 @@ import org.openide.windows.TopComponent;
 })
 public final class PretrazivacTopComponent extends TopComponent
         implements ExplorerManager.Provider, INodeIconRenderer {
-    
+
     private final ExplorerManager em = new ExplorerManager();
-    private final InstanceContent ic = new InstanceContent();
-    private final InstanceContent ic2 = new InstanceContent();
+    private final InstanceContent icDateChooser = new InstanceContent();
+    private final InstanceContent icDatumCalendar = new InstanceContent();
     private final DatumSelektor sd = DatumSelektor.getDafault();
-    //
+
     private AbstractNode root;
-    // pomoćni datum,...
+
+    private final Calendar calendar = Calendar.getInstance();
+
     private String datum;
-    private String nazivKompanije;
     private Kompanija kompanija;
     //
     private final IconRenderer iconRenderer = IconRenderer.getDefault();
@@ -76,43 +79,43 @@ public final class PretrazivacTopComponent extends TopComponent
     private void init(int IDFirme) {
         Firma f = ERSQuery.FirmaID(IDFirme);
         Kompanija k = f.getFkIdk();
-        
+
         setName(k.getNazivKompanije() + "->" + f.getNaziv());
-        
+
         root = new AbstractNode(
                 Children.create(new KompanijaChildFactory(), true));
-        
+
         em.setRootContext(root);
-        
+
         iconRenderer.generateIcons(FIRMA, this);
         root.setName("Evidencija Rada Servisa");
-        
+
     }
-    
+
     private void initKompanija(int IDKompanije) {
         Kompanija k = ERSQuery.kompanijaPoID(IDKompanije);
-        
+
         setName(k.getNazivKompanije() + "->");
-        
+
         root = new AbstractNode(
                 Children.create(new KompanijaPoIDChildFactory(IDKompanije), true));
-        
+
         em.setRootContext(root);
-        
+
         iconRenderer.generateIcons(FIRMA, this);
         root.setName("Evidencija Rada Servisa");
     }
-    
+
     public void initFirma(int IDFirma) {
         Firma f = ERSQuery.FirmaID(IDFirma);
-        
+
         setName(f.getFkIdk().getNazivKompanije() + "-" + f.getNaziv());
-        
+
         root = new AbstractNode(
                 Children.create(new FirmaPoIDChildFactory(IDFirma), true));
-        
+
         em.setRootContext(root);
-        
+
         iconRenderer.generateIcons(FIRMA, this);
         root.setName("Evidencija Rada Servisa");
     }
@@ -123,50 +126,56 @@ public final class PretrazivacTopComponent extends TopComponent
         // Postavi naziv kompanije, naziv može da se uzme iz bilo koje aktivne firme,...
 
         kompanija = ERSQuery.AktivneFirme(aktivne).iterator().next().getFkIdk();
-        ic2.add(kompanija);
+        icDatumCalendar.add(kompanija);
         setName("Pretraživač");
 
         // Prikaži sve aktivne firme ! 
         root = new AbstractNode(Children.create(new AktivnaFirmaChildFactory(true), true));
         em.setRootContext(root);
-        
+
         root.setName(kompanija.getNazivKompanije());
         iconRenderer.generateIcons(KOMPANIJA, this);
 
         // Ispiši koliko je aktivnih radnika trenutno koji se evidentiraju
         jLabel_UK_BR_RADNIKA.setText(Integer.toString(ERSQuery.radniciZaDatum(datum).size()));
     }
-    
+
     public void aktivnaFirmaRadniciZaDatum(String datum) throws NullPointerException {
         // izbacuje NullPointerException ako ne uspe da se poveže sa SQL serverom !
         // Postavi naziv kompanije, naziv može da se uzme iz bilo koje aktivne firme,...
 
         kompanija = ERSQuery.AktivneFirme(true).iterator().next().getFkIdk();
-        ic2.add(kompanija);
+        icDatumCalendar.add(kompanija);
         setName("Pretraživač");
-        
+
         root = new AbstractNode(Children.create(new AktivnaFirmaZaDatumChildFactory(true, datum), true));
         em.setRootContext(root);
-        
+
         iconRenderer.generateIcons(KOMPANIJA, this);
         root.setName(kompanija.getNazivKompanije());
     }
-    
+
     public PretrazivacTopComponent() {
         initComponents();
         setName(Bundle.CTL_PretrazivacTopComponent());
         setToolTipText(Bundle.HINT_PretrazivacTopComponent());
         putClientProperty(TopComponent.PROP_KEEP_PREFERRED_SIZE_WHEN_SLIDED_IN, Boolean.TRUE);
-        
+
         associateLookup(
                 new ProxyLookup(
                         ExplorerUtils.createLookup(em, getActionMap()),
-                        new AbstractLookup(ic),
-                        new AbstractLookup(ic2)));
-        
+                        new AbstractLookup(icDateChooser),
+                        new AbstractLookup(icDatumCalendar)
+                )
+        );
+
+        calendar.setTime(jCalendar1.getDate());
+        // Pazi na msesec : mesec poÄinje od nule !!!
+        // kalendar = new Kalendar(calendar.get(Calendar.YEAR), 1 + calendar.get(Calendar.MONTH));
+
         jCalendar1PropertyChange(null);
 
-        // Inicijalizacija firme koju želimo da pratimo (Aktivna firma) = Autokomerc Komision :
+        // Inicijalizacija firme koju Å¾elimo da pratimo (Aktivna firma) = Autokomerc Komision :
         // int aktivnaFirmaID = ERSQuery.AktivneFirme(true).iterator().next().getIDFirma();
         // initFirma(aktivnaFirmaID);
         try {
@@ -202,11 +211,6 @@ public final class PretrazivacTopComponent extends TopComponent
         });
 
         jDateChooser_Datum_OD.setDateFormatString(org.openide.util.NbBundle.getMessage(PretrazivacTopComponent.class, "PretrazivacTopComponent.jDateChooser_Datum_OD.dateFormatString")); // NOI18N
-        jDateChooser_Datum_OD.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jDateChooser_Datum_ODFocusLost(evt);
-            }
-        });
         jDateChooser_Datum_OD.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 jDateChooser_Datum_ODPropertyChange(evt);
@@ -214,11 +218,6 @@ public final class PretrazivacTopComponent extends TopComponent
         });
 
         jDateChooser_Datum_DO.setDateFormatString(org.openide.util.NbBundle.getMessage(PretrazivacTopComponent.class, "PretrazivacTopComponent.jDateChooser_Datum_DO.dateFormatString")); // NOI18N
-        jDateChooser_Datum_DO.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusLost(java.awt.event.FocusEvent evt) {
-                jDateChooser_Datum_DOFocusLost(evt);
-            }
-        });
         jDateChooser_Datum_DO.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
             public void propertyChange(java.beans.PropertyChangeEvent evt) {
                 jDateChooser_Datum_DOPropertyChange(evt);
@@ -310,47 +309,54 @@ public final class PretrazivacTopComponent extends TopComponent
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void setUpDatumKalendar() {
+        Date date = jCalendar1.getDate();
+
+        calendar.setTime(date);
+        datum = new SimpleDateFormat("yyyy-MM-dd").format(date);
+        //kalendar.setGM(calendar.get(Calendar.YEAR), 1 + calendar.get(Calendar.MONTH));
+
+        icDatumCalendar.set(Collections.singleton(datum), null);
+        // icKalendar.set(Collections.singleton(kalendar), null);
+    }
+
     private void jCalendar1PropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jCalendar1PropertyChange
         // TODO add your handling code here:
-        ic.set(Collections.emptyList(), null);
-        
-        datum = new SimpleDateFormat("yyyy-MM-dd").format(jCalendar1.getDate());
-        ic.add(datum);
-        
+        setUpDatumKalendar();
+
         try {
             aktivnaFirmaRadniciZaDatum(datum);
-
-            // Prikaži koliko radnika se evidentiralo za datum...
+            // PrikaÅ¾i koliko radnika se evidentiralo za datum...
             jLabel_UK_BR_RADNIKA.setText(Integer.toString(ERSQuery.radniciZaDatum(datum).size()));
         } catch (NullPointerException e) {
         }
-        
+
         StatusDisplayer.getDefault().setStatusText(datum.toString());
     }//GEN-LAST:event_jCalendar1PropertyChange
 
     private void jDateChooser_Datum_ODPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser_Datum_ODPropertyChange
         // TODO add your handling code here:
-        ic.set(Collections.emptyList(), null);
-        
+        icDateChooser.set(Collections.emptyList(), null);
+
         try {
             sd.setDatumOD(jDateChooser_Datum_OD.getDate());
-            ic.add(sd);
-            
+            icDateChooser.set(Collections.singleton(sd), null);
+
         } catch (NullPointerException e1) {
         } catch (PomesaniDatumiException e1) {
-            Display.obavestenjeBaloncic("Greška.", "Izabrati ispravno početni i krajnji datum.",
+            Display.obavestenjeBaloncic("Greškaka.", "Izabrati ispravno početni i krajnji datum.",
                     Display.TIP_OBAVESTENJA.GRESKA);
         }
     }//GEN-LAST:event_jDateChooser_Datum_ODPropertyChange
 
     private void jDateChooser_Datum_DOPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_jDateChooser_Datum_DOPropertyChange
         // TODO add your handling code here:
-        ic.set(Collections.emptyList(), null);
-        
+        icDateChooser.set(Collections.emptyList(), null);
+
         try {
             sd.setDatumDO(jDateChooser_Datum_DO.getDate());
-            ic.add(sd);
-            
+            icDateChooser.set(Collections.singleton(sd), null);
+
         } catch (NullPointerException e1) {
         } catch (PomesaniDatumiException e1) {
             Display.obavestenjeBaloncic("Unet obrnut redosled datuma.",
@@ -359,15 +365,6 @@ public final class PretrazivacTopComponent extends TopComponent
         }
     }//GEN-LAST:event_jDateChooser_Datum_DOPropertyChange
 
-    private void jDateChooser_Datum_ODFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jDateChooser_Datum_ODFocusLost
-        // TODO add your handling code here:
-        jDateChooser_Datum_OD.actionPerformed(null);
-    }//GEN-LAST:event_jDateChooser_Datum_ODFocusLost
-
-    private void jDateChooser_Datum_DOFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jDateChooser_Datum_DOFocusLost
-        // TODO add your handling code here:
-        jDateChooser_Datum_DO.actionPerformed(null);
-    }//GEN-LAST:event_jDateChooser_Datum_DOFocusLost
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.openide.explorer.view.BeanTreeView beanTreeView_ERS_Radnici;
     private com.toedter.calendar.JCalendar jCalendar1;
@@ -387,19 +384,19 @@ public final class PretrazivacTopComponent extends TopComponent
     public void componentOpened() {
         // TODO add custom code on component opening
     }
-    
+
     @Override
     public void componentClosed() {
         // TODO add custom code on component closing
     }
-    
+
     void writeProperties(java.util.Properties p) {
         // better to version settings since initial version as advocated at
         // http://wiki.apidesign.org/wiki/PropertyFiles
         p.setProperty("version", "1.0");
         // TODO store your settings
     }
-    
+
     void readProperties(java.util.Properties p) {
         String version = p.getProperty("version");
         // TODO read your settings according to their version
@@ -410,7 +407,7 @@ public final class PretrazivacTopComponent extends TopComponent
     public ExplorerManager getExplorerManager() {
         return em;
     }
-    
+
     @Override
     public void node_setIconBaseWithExtension(String URL) {
         root.setIconBaseWithExtension(URL);
