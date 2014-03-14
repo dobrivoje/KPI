@@ -7,6 +7,7 @@ package servis.manager;
 
 import ERS.queries.ERSQuery;
 import JFXChartGenerators.AbstractChartGenerator;
+import JFXChartGenerators.LineChartGenerator;
 import com.dobrivoje.utilities.comboboxmodeli.FirmaComboBoxModel;
 import com.dobrivoje.utilities.comboboxmodeli.KompanijaComboBoxModel;
 import com.dobrivoje.utilities.comboboxmodeli.OrgJedComboBoxModel;
@@ -75,6 +76,8 @@ public final class ManagementPodatakaTopComponent extends TopComponent
     private Lookup.Result<String> kalendarLookup;
 
     private DatumSelektor ds;
+
+    private final AbstractChartGenerator lcg1 = new LineChartGenerator();
 
     private static EntityManager em;
 
@@ -242,7 +245,7 @@ public final class ManagementPodatakaTopComponent extends TopComponent
      *
      * @return the value of kalendar_bind
      */
-    public String getKalendar() {
+    public String getKalendarDatum() {
         return kalendar_bind;
     }
 
@@ -251,7 +254,7 @@ public final class ManagementPodatakaTopComponent extends TopComponent
      *
      * @param kalendar new value of kalendar_bind
      */
-    public void setKalendar(String kalendar) {
+    public void setKalendarDatum(String kalendar) {
         String oldKalendar = this.kalendar_bind;
         this.kalendar_bind = kalendar;
         propertyChangeSupport.firePropertyChange(PROP_KALENDAR, oldKalendar, kalendar);
@@ -382,8 +385,6 @@ public final class ManagementPodatakaTopComponent extends TopComponent
         jRadioButton_Radnik_Analiza = new javax.swing.JRadioButton();
         jButton_Efikasnost_Radnika_Izvestaj = new javax.swing.JButton();
         jLabel_Naslov4 = new javax.swing.JLabel();
-        jPanel_DinamikaPoslovanja = new javax.swing.JPanel();
-        jPanel_DinPosl = new javax.swing.JPanel();
 
         jFileChooser.setCurrentDirectory(new java.io.File("C:\\"));
             jFileChooser.setDialogTitle(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jFileChooser.dialogTitle")); // NOI18N
@@ -1303,28 +1304,6 @@ public final class ManagementPodatakaTopComponent extends TopComponent
 
             jTP_DataManagement.addTab(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jPanel_Radnik.TabConstraints.tabTitle"), jPanel_Radnik); // NOI18N
 
-            jPanel_DinPosl.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-            jPanel_DinPosl.setLayout(new java.awt.BorderLayout());
-
-            javax.swing.GroupLayout jPanel_DinamikaPoslovanjaLayout = new javax.swing.GroupLayout(jPanel_DinamikaPoslovanja);
-            jPanel_DinamikaPoslovanja.setLayout(jPanel_DinamikaPoslovanjaLayout);
-            jPanel_DinamikaPoslovanjaLayout.setHorizontalGroup(
-                jPanel_DinamikaPoslovanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel_DinamikaPoslovanjaLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel_DinPosl, javax.swing.GroupLayout.DEFAULT_SIZE, 599, Short.MAX_VALUE)
-                    .addContainerGap())
-            );
-            jPanel_DinamikaPoslovanjaLayout.setVerticalGroup(
-                jPanel_DinamikaPoslovanjaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel_DinamikaPoslovanjaLayout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jPanel_DinPosl, javax.swing.GroupLayout.DEFAULT_SIZE, 235, Short.MAX_VALUE)
-                    .addGap(179, 179, 179))
-            );
-
-            jTP_DataManagement.addTab(org.openide.util.NbBundle.getMessage(ManagementPodatakaTopComponent.class, "ManagementPodatakaTopComponent.jPanel_DinamikaPoslovanja.TabConstraints.tabTitle"), jPanel_DinamikaPoslovanja); // NOI18N
-
             javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
             this.setLayout(layout);
             layout.setHorizontalGroup(
@@ -1757,8 +1736,6 @@ public final class ManagementPodatakaTopComponent extends TopComponent
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel_Barkod;
-    private javax.swing.JPanel jPanel_DinPosl;
-    private javax.swing.JPanel jPanel_DinamikaPoslovanja;
     private javax.swing.JPanel jPanel_Firma;
     private javax.swing.JPanel jPanel_Klijent;
     private javax.swing.JPanel jPanel_Klijent1;
@@ -1907,8 +1884,7 @@ public final class ManagementPodatakaTopComponent extends TopComponent
 
                 if (!datumi.isEmpty()) {
                     for (String d1 : datumi) {
-                        setKalendar(d1);
-                        setFX_KretanjeRN(d1, null);
+                        setKalendarDatum(d1);
                     }
                 }
             }
@@ -1990,22 +1966,6 @@ public final class ManagementPodatakaTopComponent extends TopComponent
     }
     //</editor-fold>
 
-    private void setFX_KretanjeRN(String Datum, AbstractChartGenerator lcg) {
-        try {
-            /*lcg.setSerije(
-             Br_RNFA_Mesec_LineChartData(Datum, 1),
-             Br_RNFA_Mesec_LineChartData(Datum, 2),
-             Br_RNFA_Mesec_LineChartData(Datum, 3)
-             );
-             */
-            lcg.setChartTitle("Dinamika Rada Servisa za " + String.valueOf("__NAPRAVITI_OVO__") + " Godinu");
-            lcg.setSeriesTitles("Radni Nalozi", "Fakture", "Storno Fakture");
-            lcg.createFXObject();
-        } catch (NullPointerException ex) {
-            Display.obavestenjeBaloncic("GreÅ¡ka.", ex.getLocalizedMessage(), Display.TIP_OBAVESTENJA.GRESKA);
-        }
-    }
-
     //<editor-fold defaultstate="collapsed" desc="ne koristi se...">
     void writeProperties(java.util.Properties p) {
         // better to version settings since initial version as advocated at
@@ -2023,8 +1983,8 @@ public final class ManagementPodatakaTopComponent extends TopComponent
     public void resultChanged(LookupEvent le) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    //</editor-fold>
 
-//</editor-fold>
     @Override
     public void requestActive() {
         QSRadnik();
