@@ -23,8 +23,8 @@ import org.openide.util.Lookup;
 import org.openide.util.LookupEvent;
 import org.openide.util.LookupListener;
 import org.openide.util.NbBundle.Messages;
+import org.openide.util.Utilities;
 import org.openide.windows.TopComponent;
-import org.openide.windows.WindowManager;
 
 /**
  * Top component which displays something.
@@ -61,6 +61,8 @@ public final class DnevnaEvidencijaTopComponent extends TopComponent
     private EvidencijaSvihRadnikaFirmeZaDatumChildFactory evidencijaChildFactory = null;
     //
     private final ExplorerManager em = new ExplorerManager();
+    private LookupListener llKalendar;
+    private LookupListener llFirma;
 
     private void evidencijeRadnikaNodeCreation(boolean aktivnaFirma) {
         Firma f;
@@ -186,13 +188,8 @@ public final class DnevnaEvidencijaTopComponent extends TopComponent
     @Override
     public void componentOpened() {
         // TODO add custom code on component opening
-        odabraniDatum = WindowManager
-                .getDefault()
-                .findTopComponent("PretrazivacTopComponent")
-                .getLookup()
-                .lookupResult(String.class);
-
-        LookupListener ll_1 = new LookupListener() {
+        odabraniDatum = Utilities.actionsGlobalContext().lookupResult(String.class);
+        llKalendar = new LookupListener() {
             @Override
             public void resultChanged(LookupEvent le) {
                 Lookup.Result ls = (Lookup.Result) le.getSource();
@@ -205,17 +202,10 @@ public final class DnevnaEvidencijaTopComponent extends TopComponent
                 initOutLineViewDnevnaEvidencijeSvihRadnika(datumLookup);
             }
         };
+        odabraniDatum.addLookupListener(llKalendar);
 
-        odabraniDatum.addLookupListener(ll_1);
-        ll_1.resultChanged(new LookupEvent(odabraniDatum));
-        //
-        odabranaFirma = WindowManager
-                .getDefault()
-                .findTopComponent("PretrazivacTopComponent")
-                .getLookup()
-                .lookupResult(Firma.class);
-
-        LookupListener ll_2 = new LookupListener() {
+        odabranaFirma = Utilities.actionsGlobalContext().lookupResult(Firma.class);
+        llFirma = new LookupListener() {
             @Override
             public void resultChanged(LookupEvent le) {
                 Lookup.Result lr = (Lookup.Result) le.getSource();
@@ -229,17 +219,15 @@ public final class DnevnaEvidencijaTopComponent extends TopComponent
                 evidencijeRadnikaRefresh(firmaLookup, datumLookup);
             }
         };
-        odabranaFirma.addLookupListener(ll_2);
-        ll_2.resultChanged(new LookupEvent(odabranaFirma));
+        odabranaFirma.addLookupListener(llFirma);
     }
 
     @Override
     public void componentClosed() {
-        // TODO add custom code on component closing
-        odabraniDatum.removeLookupListener(this);
+        odabraniDatum.removeLookupListener(llKalendar);
         odabraniDatum = null;
-        //
-        odabranaFirma.removeLookupListener(this);
+
+        odabranaFirma.removeLookupListener(llFirma);
         odabranaFirma = null;
     }
 

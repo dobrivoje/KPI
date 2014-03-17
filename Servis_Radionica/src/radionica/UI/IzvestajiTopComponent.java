@@ -18,7 +18,6 @@ import org.openide.util.LookupListener;
 import org.openide.util.NbBundle.Messages;
 import org.openide.util.Utilities;
 import org.openide.windows.TopComponent;
-import org.openide.windows.WindowManager;
 
 /**
  * Top component which displays something.
@@ -53,6 +52,9 @@ public final class IzvestajiTopComponent extends TopComponent
     private Radnik radnik;
     private Firma firma;
     private DatumSelektor ds;
+    private LookupListener llFirma;
+    private LookupListener llRadnik;
+    private LookupListener llDatumSelektor;
 
     public IzvestajiTopComponent() {
         initComponents();
@@ -363,38 +365,31 @@ public final class IzvestajiTopComponent extends TopComponent
     // End of variables declaration//GEN-END:variables
 
     @Override
-    public
-            void componentOpened() {
-        odabranaFirma = Utilities
-                .actionsGlobalContext()
-                .lookupResult(Firma.class
-                );
+    public void componentOpened() {
+        odabranaFirma = Utilities.actionsGlobalContext().lookupResult(Firma.class);
+        llFirma = new LookupListener() {
+            @Override
+            public void resultChanged(LookupEvent le
+            ) {
+                Lookup.Result lr = (Lookup.Result) le.getSource();
+                Collection<Firma> firme = lr.allInstances();
 
-        odabranaFirma.addLookupListener(
-                new LookupListener() {
-                    @Override
-                    public void resultChanged(LookupEvent le
-                    ) {
-                        Lookup.Result lr = (Lookup.Result) le.getSource();
-                        Collection<Firma> firme = lr.allInstances();
+                if (firme != null) {
+                    for (Firma f1 : firme) {
+                        firma = f1;
 
-                        if (firme != null) {
-                            for (Firma f1 : firme) {
-                                firma = f1;
-
-                                jTextField_KOMPANIJA.setText(firma.getFkIdk().getNazivKompanije());
-                                jTextField_FIRMA.setText(firma.getNaziv());
-                            }
-                        }
+                        jTextField_KOMPANIJA.setText(firma.getFkIdk().getNazivKompanije());
+                        jTextField_FIRMA.setText(firma.getNaziv());
                     }
                 }
-        );
+            }
+        };
+        odabranaFirma.addLookupListener(llFirma);
 
-        odabraniRadnik = Utilities
-                .actionsGlobalContext()
-                .lookupResult(Radnik.class);
-
-        LookupListener ll1 = new LookupListener() {
+        
+        
+        odabraniRadnik = Utilities.actionsGlobalContext().lookupResult(Radnik.class);
+        llRadnik = new LookupListener() {
             @Override
             public void resultChanged(LookupEvent le) {
                 Lookup.Result lr = (Lookup.Result) le.getSource();
@@ -418,19 +413,12 @@ public final class IzvestajiTopComponent extends TopComponent
                 }
             }
         };
+        odabraniRadnik.addLookupListener(llRadnik);
 
-        odabraniRadnik.addLookupListener(ll1);
-
-        ll1.resultChanged(
-                new LookupEvent(odabraniRadnik));
-
-        odabraniDatumi = WindowManager
-                .getDefault()
-                .findTopComponent("PretrazivacTopComponent")
-                .getLookup()
-                .lookupResult(DatumSelektor.class);
-
-        LookupListener ll2 = new LookupListener() {
+        
+        
+        odabraniDatumi = Utilities.actionsGlobalContext().lookupResult(DatumSelektor.class);
+        llDatumSelektor = new LookupListener() {
             @Override
             public void resultChanged(LookupEvent le) {
                 Lookup.Result lrds = (Lookup.Result) le.getSource();
@@ -444,22 +432,18 @@ public final class IzvestajiTopComponent extends TopComponent
                 }
             }
         };
-
-        odabraniDatumi.addLookupListener(ll2);
-
-        ll2.resultChanged(
-                new LookupEvent(odabraniDatumi));
+        odabraniDatumi.addLookupListener(llDatumSelektor);
     }
 
     @Override
     public void componentClosed() {
-        odabranaFirma.removeLookupListener(this);
+        odabranaFirma.removeLookupListener(llFirma);
         odabranaFirma = null;
 
-        odabraniRadnik.removeLookupListener(this);
+        odabraniRadnik.removeLookupListener(llRadnik);
         odabraniRadnik = null;
 
-        odabraniDatumi.removeLookupListener(this);
+        odabraniDatumi.removeLookupListener(llDatumSelektor);
         odabraniDatumi = null;
     }
     //<editor-fold defaultstate="collapsed" desc="ne treba mi,...">

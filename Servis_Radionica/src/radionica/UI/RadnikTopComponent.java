@@ -74,6 +74,10 @@ public final class RadnikTopComponent extends TopComponent
     private Firma firma_bind;
 
     public static final String PROP_FIRMA_BIND = "firma_bind";
+    private LookupListener llFirma;
+    private LookupListener llOrgJed;
+    private LookupListener llRadnici;
+    private LookupListener llDatum;
 
     /**
      * Get the value of firma_bind
@@ -656,7 +660,7 @@ public final class RadnikTopComponent extends TopComponent
         odabraniRadnici = Utilities.actionsGlobalContext().lookupResult(Radnik.class);
         odabraniDatum = Utilities.actionsGlobalContext().lookupResult(String.class);
 
-        odabraneFirme.addLookupListener(new LookupListener() {
+        llFirma = new LookupListener() {
             @Override
             public void resultChanged(LookupEvent le) {
                 Lookup.Result f = (Lookup.Result) le.getSource();
@@ -669,9 +673,10 @@ public final class RadnikTopComponent extends TopComponent
                     }
                 }
             }
-        });
+        };
+        odabraneFirme.addLookupListener(llFirma);
 
-        odabraneOrgJed.addLookupListener(new LookupListener() {
+        llOrgJed = new LookupListener() {
             @Override
             public void resultChanged(LookupEvent le) {
                 Lookup.Result o = (Lookup.Result) le.getSource();
@@ -686,9 +691,10 @@ public final class RadnikTopComponent extends TopComponent
                     }
                 }
             }
-        });
+        };
+        odabraneOrgJed.addLookupListener(llOrgJed);
 
-        odabraniRadnici.addLookupListener(new LookupListener() {
+        llRadnici = new LookupListener() {
             @Override
             public void resultChanged(LookupEvent le) {
                 Lookup.Result lr = (Lookup.Result) le.getSource();
@@ -706,9 +712,10 @@ public final class RadnikTopComponent extends TopComponent
                     }
                 }
             }
-        });
+        };
+        odabraniRadnici.addLookupListener(llRadnici);
 
-        odabraniDatum.addLookupListener(new LookupListener() {
+        llDatum = new LookupListener() {
             @Override
             public void resultChanged(LookupEvent le) {
                 Lookup.Result lr = (Lookup.Result) le.getSource();
@@ -722,21 +729,22 @@ public final class RadnikTopComponent extends TopComponent
                     }
                 }
             }
-        });
+        };
+        odabraniDatum.addLookupListener(llDatum);
     }
 
     @Override
     public void componentClosed() {
-        odabraneFirme.removeLookupListener(this);
+        odabraneFirme.removeLookupListener(llFirma);
         odabraneFirme = null;
 
-        odabraneOrgJed.removeLookupListener(this);
+        odabraneOrgJed.removeLookupListener(llOrgJed);
         odabraneOrgJed = null;
 
-        odabraniRadnici.removeLookupListener(this);
+        odabraniRadnici.removeLookupListener(llRadnici);
         odabraniRadnici = null;
 
-        odabraniDatum.removeLookupListener(this);
+        odabraniDatum.removeLookupListener(llDatum);
         odabraniDatum = null;
     }
 
@@ -856,7 +864,7 @@ public final class RadnikTopComponent extends TopComponent
     private void QSRadnik() {
         IRadnik ir = Lookup.getDefault().lookup(IRadnik.class);
 
-        setDatum_bind(datum_bind== null ? new SimpleDateFormat("yyyy-MM-dd").format(new Date()) : datum_bind);
+        setDatum_bind(datum_bind == null ? new SimpleDateFormat("yyyy-MM-dd").format(new Date()) : datum_bind);
 
         if (ir.getRadnik() != null) {
             Radnik r = ir.getRadnik();

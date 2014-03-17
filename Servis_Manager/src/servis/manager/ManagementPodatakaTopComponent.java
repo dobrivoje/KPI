@@ -6,8 +6,6 @@
 package servis.manager;
 
 import ERS.queries.ERSQuery;
-import JFXChartGenerators.AbstractChartGenerator;
-import JFXChartGenerators.LineChartGenerator;
 import com.dobrivoje.utilities.comboboxmodeli.FirmaComboBoxModel;
 import com.dobrivoje.utilities.comboboxmodeli.KompanijaComboBoxModel;
 import com.dobrivoje.utilities.comboboxmodeli.OrgJedComboBoxModel;
@@ -75,9 +73,14 @@ public final class ManagementPodatakaTopComponent extends TopComponent
     private Lookup.Result<DatumSelektor> datumiLookup;
     private Lookup.Result<String> kalendarLookup;
 
-    private DatumSelektor ds;
+    private LookupListener llKompanija;
+    private LookupListener llFirma;
+    private LookupListener llOrgJed;
+    private LookupListener llRadnik;
+    private LookupListener llDatumSelektor;
+    private LookupListener llKalendar;
 
-    private final AbstractChartGenerator lcg1 = new LineChartGenerator();
+    private DatumSelektor ds;
 
     private static EntityManager em;
 
@@ -1788,7 +1791,7 @@ public final class ManagementPodatakaTopComponent extends TopComponent
     @Override
     public void componentOpened() {
         kompanijaLookup = Utilities.actionsGlobalContext().lookupResult(Kompanija.class);
-        kompanijaLookup.addLookupListener(new LookupListener() {
+        llKompanija = new LookupListener() {
             @Override
             public void resultChanged(LookupEvent le) {
                 Lookup.Result k = (Lookup.Result) le.getSource();
@@ -1801,10 +1804,13 @@ public final class ManagementPodatakaTopComponent extends TopComponent
                     }
                 }
             }
-        });
+        };
+        kompanijaLookup.addLookupListener(llKompanija);
 
+        
+        
         firmaLookup = Utilities.actionsGlobalContext().lookupResult(Firma.class);
-        firmaLookup.addLookupListener(new LookupListener() {
+        llFirma = new LookupListener() {
             @Override
             public void resultChanged(LookupEvent le) {
                 Lookup.Result k = (Lookup.Result) le.getSource();
@@ -1821,10 +1827,13 @@ public final class ManagementPodatakaTopComponent extends TopComponent
                     }
                 }
             }
-        });
+        };
+        firmaLookup.addLookupListener(llFirma);
 
+        
+        
         orgJedLookup = Utilities.actionsGlobalContext().lookupResult(Orgjed.class);
-        orgJedLookup.addLookupListener(new LookupListener() {
+        llOrgJed = new LookupListener() {
             @Override
             public void resultChanged(LookupEvent le) {
                 Lookup.Result k = (Lookup.Result) le.getSource();
@@ -1842,10 +1851,13 @@ public final class ManagementPodatakaTopComponent extends TopComponent
                     }
                 }
             }
-        });
+        };
+        orgJedLookup.addLookupListener(llOrgJed);
 
+        
+        
         radnikLookup = Utilities.actionsGlobalContext().lookupResult(Radnik.class);
-        radnikLookup.addLookupListener(new LookupListener() {
+        llRadnik = new LookupListener() {
             @Override
             public void resultChanged(LookupEvent le) {
                 Lookup.Result s = (Lookup.Result) le.getSource();
@@ -1857,10 +1869,13 @@ public final class ManagementPodatakaTopComponent extends TopComponent
                     }
                 }
             }
-        });
+        };
+        radnikLookup.addLookupListener(llRadnik);
 
+        
+        
         datumiLookup = Utilities.actionsGlobalContext().lookupResult(DatumSelektor.class);
-        datumiLookup.addLookupListener(new LookupListener() {
+        llDatumSelektor = new LookupListener() {
             @Override
             public void resultChanged(LookupEvent le) {
                 Lookup.Result lr = (Lookup.Result) le.getSource();
@@ -1873,10 +1888,13 @@ public final class ManagementPodatakaTopComponent extends TopComponent
                     }
                 }
             }
-        });
+        };
+        datumiLookup.addLookupListener(llDatumSelektor);
 
+        
+        
         kalendarLookup = Utilities.actionsGlobalContext().lookupResult(String.class);
-        kalendarLookup.addLookupListener(new LookupListener() {
+        llKalendar = new LookupListener() {
             @Override
             public void resultChanged(LookupEvent le) {
                 Lookup.Result lr = (Lookup.Result) le.getSource();
@@ -1888,22 +1906,23 @@ public final class ManagementPodatakaTopComponent extends TopComponent
                     }
                 }
             }
-        });
+        };
+        kalendarLookup.addLookupListener(llKalendar);
     }
 
     @Override
     public void componentClosed() {
-        kompanijaLookup.removeLookupListener(this);
+        kompanijaLookup.removeLookupListener(llKompanija);
         kompanijaLookup = null;
-        firmaLookup.removeLookupListener(this);
+        firmaLookup.removeLookupListener(llFirma);
         firmaLookup = null;
-        orgJedLookup.removeLookupListener(this);
+        orgJedLookup.removeLookupListener(llOrgJed);
         orgJedLookup = null;
-        radnikLookup.removeLookupListener(this);
+        radnikLookup.removeLookupListener(llRadnik);
         radnikLookup = null;
-        datumiLookup.removeLookupListener(this);
+        datumiLookup.removeLookupListener(llDatumSelektor);
         datumiLookup = null;
-        kalendarLookup.removeLookupListener(this);
+        kalendarLookup.removeLookupListener(llKalendar);
         kalendarLookup = null;
     }
     //</editor-fold>
