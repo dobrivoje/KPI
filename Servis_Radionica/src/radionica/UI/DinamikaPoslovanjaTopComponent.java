@@ -5,9 +5,10 @@
  */
 package radionica.UI;
 
-import static ERS.queries.ERSQuery.UKDnevnaFakturisanost;
 import static ERS.queries.ERSQuery.UKSati;
+import static ERS.queries.ERSQuery.UKDnevnaFakturisanost;
 import JFXChartGenerators.AbstractChartGenerator;
+import JFXChartGenerators.CSSStyles;
 import JFXChartGenerators.LineChartGenerator;
 import com.dobrivoje.utilities.datumi.SrpskiKalendar;
 import com.dobrivoje.utilities.warnings.Display;
@@ -134,8 +135,11 @@ public final class DinamikaPoslovanjaTopComponent extends TopComponent {
         setToolTipText(Bundle.HINT_DinamikaPoslovanjaTopComponent());
 
         lcgRNKretanje.lineChartSetUpPanel(jPanel_UP_LEFT);
+        lcgRNKretanje.setCSSStyle(CSSStyles.Style.RED);
         lcgRNKretanjePreth.lineChartSetUpPanel(jPanel_UP_RIGHT);
+        lcgRNKretanjePreth.setCSSStyle(CSSStyles.Style.YELLOW);
         lcgRN.lineChartSetUpPanel(jPanel_UP_DOWN);
+        lcgRN.setCSSStyle(CSSStyles.Style.RED);
 
         setKalendarDatum(null);
 

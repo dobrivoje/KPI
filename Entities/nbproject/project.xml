@@ -17,6 +17,7 @@
             </module-dependencies>
             <public-packages>
                 <package>ERS.Beans.FakturisaneUsluge</package>
+                <package>ERS.BusinessBeans</package>
                 <package>ERS.queries</package>
                 <package>ent</package>
                 <package>sp.izvestaji</package>
