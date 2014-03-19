@@ -24,10 +24,10 @@ public class CSSStyles {
     public static String getCSSStyle(Style CSSStyle) {
         switch (CSSStyle) {
             case RED:
-                CSSFile = "LCG.css";
+                CSSFile = "LCG_RED.css";
                 break;
             case YELLOW:
-                CSSFile = "YELLOW.css";
+                CSSFile = "LCG_YELLOW.css";
                 break;
 
             default:

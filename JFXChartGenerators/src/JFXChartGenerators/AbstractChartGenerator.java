@@ -86,8 +86,8 @@ public abstract class AbstractChartGenerator {
     public void setYAxisTitle(String yAxisTitle) {
         this.yAxisTitle = yAxisTitle;
     }
-
     //</editor-fold>
+
     //<editor-fold defaultstate="collapsed" desc="Abstract BarChart Creation">
     protected abstract Chart createCustomChart();
     //</editor-fold>
