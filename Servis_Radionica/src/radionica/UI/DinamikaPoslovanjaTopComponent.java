@@ -7,9 +7,9 @@ package radionica.UI;
 
 import static ERS.queries.ERSQuery.UKSati;
 import static ERS.queries.ERSQuery.UKDnevnaFakturisanost;
-import JFXChartGenerators.AbstractChartGenerator;
-import JFXChartGenerators.CSSStyles;
-import JFXChartGenerators.LineChartGenerator;
+import JFXChartGenerators.CssStyles.CSSStyles;
+import JFXChartGenerators.Lines.AbstractMonthLineGenerator;
+import JFXChartGenerators.Lines.LineGenerator;
 import com.dobrivoje.utilities.datumi.SrpskiKalendar;
 import com.dobrivoje.utilities.warnings.Display;
 import java.beans.PropertyChangeListener;
@@ -59,12 +59,12 @@ public final class DinamikaPoslovanjaTopComponent extends TopComponent {
     private int god, mesec;
 
     private Lookup.Result<String> kalendarLookup;
-    private final AbstractChartGenerator lcgRNKretanje = new LineChartGenerator();
-    private final AbstractChartGenerator lcgRNKretanjePreth = new LineChartGenerator();
+    private final AbstractMonthLineGenerator lcgRNKretanje = new LineGenerator();
+    private final AbstractMonthLineGenerator lcgRNKretanjePreth = new LineGenerator();
 
     private LookupListener llKalendar;
 
-    private final AbstractChartGenerator lcgRN = new LineChartGenerator();
+    private final LineGenerator lcgRN = new LineGenerator();
 
     //<editor-fold defaultstate="collapsed" desc="Kalendar Bind">
     private String kalendarDatum_bind;
@@ -135,11 +135,13 @@ public final class DinamikaPoslovanjaTopComponent extends TopComponent {
         setToolTipText(Bundle.HINT_DinamikaPoslovanjaTopComponent());
 
         lcgRNKretanje.lineChartSetUpPanel(jPanel_UP_LEFT);
-        lcgRNKretanje.setCSSStyle(CSSStyles.Style.RED);
+        lcgRNKretanje.setCSSStyle(CSSStyles.Style.RED_LINE);
+
         lcgRNKretanjePreth.lineChartSetUpPanel(jPanel_UP_RIGHT);
-        lcgRNKretanjePreth.setCSSStyle(CSSStyles.Style.YELLOW);
+        lcgRNKretanjePreth.setCSSStyle(CSSStyles.Style.YELLOW_LINE);
+
         lcgRN.lineChartSetUpPanel(jPanel_UP_DOWN);
-        lcgRN.setCSSStyle(CSSStyles.Style.RED);
+        lcgRN.setCSSStyle(CSSStyles.Style.RED_LINE);
 
         setKalendarDatum(null);
 
@@ -245,7 +247,7 @@ public final class DinamikaPoslovanjaTopComponent extends TopComponent {
     }
     //</editor-fold>
 
-    private void setFX_DinamikaFA(int Godina, int Mesec, AbstractChartGenerator lcg) {
+    private void setFX_DinamikaFA(int Godina, int Mesec, AbstractMonthLineGenerator lcg) {
         String tekMesGod = SrpskiKalendar.getMesecNazivLatinica(Mesec) + " " + String.valueOf(Godina);
         String ukSati = String.valueOf(",  Ukupno " + UKSati(Godina, Mesec)) + " sati.";
 
@@ -260,14 +262,14 @@ public final class DinamikaPoslovanjaTopComponent extends TopComponent {
         }
     }
 
-    private void setFX_DinamikaFA_Preth(int Godina, int Mesec, AbstractChartGenerator lcg) {
+    private void setFX_DinamikaFA_Preth(int Godina, int Mesec, AbstractMonthLineGenerator lcg) {
         int m = (Mesec == 1 ? 12 : Mesec - 1);
         int g = (Mesec == 1 ? Godina - 1 : Godina);
 
         setFX_DinamikaFA(g, m, lcg);
     }
 
-    private void setFX_DinamikaFA_TekIPreth(int Godina, int Mesec, AbstractChartGenerator lcg) {
+    private void setFX_DinamikaFA_TekIPreth(int Godina, int Mesec, LineGenerator lcg) {
 
         int m = (Mesec == 1 ? 12 : Mesec - 1);
         int g = (Mesec == 1 ? Godina - 1 : Godina);

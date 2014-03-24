@@ -5,6 +5,7 @@
  */
 package JFXChartGenerators;
 
+import JFXChartGenerators.CssStyles.CSSStyles;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,13 +22,15 @@ import javax.swing.JPanel;
 /**
  *
  * @author root
+ * @param <T1> -> x Axis
+ * @param <T2> -> y Axis
  */
-public abstract class AbstractChartGenerator {
+public abstract class AbstractBASEChartGenerator<T1, T2> {
 
     protected Scene scene;
     protected CSSStyles.Style CSSStyle;
 
-    protected List<Map<Integer, Integer>> FXSeriesMaps;
+    protected List<Map<T1, T2>> FXSeriesMaps;
     protected List<String> FXSeriesMapTitles;
 
     protected String ChartTite;
@@ -40,9 +43,9 @@ public abstract class AbstractChartGenerator {
     protected List<XYChart.Series> fxSeries;
 
     //<editor-fold defaultstate="collapsed" desc="Init, getters/setters">
-    public AbstractChartGenerator() {
+    public AbstractBASEChartGenerator() {
         this.chartFxPanel = new JFXPanel();
-        this.CSSStyle = CSSStyles.Style.DEFAULT;
+        this.CSSStyle = CSSStyles.Style.DEFAULT_LINE;
     }
 
     public void setCSSStyle(CSSStyles.Style CSSStyle) {
@@ -53,16 +56,16 @@ public abstract class AbstractChartGenerator {
         panelToEmbedFXObject.add(this.chartFxPanel, BorderLayout.CENTER);
     }
 
-    public void setUpSeries(Map<Integer, Integer>... FXSeries) {
+    public void setUpSeries(Map<T1, T2>... FXSeries) {
         this.fxSeries = new ArrayList<>(FXSeries.length);
         this.FXSeriesMaps = new ArrayList<>(FXSeries.length);
 
-        for (Map<Integer, Integer> map : FXSeries) {
+        for (Map<T1, T2> map : FXSeries) {
             this.FXSeriesMaps.add(new TreeMap<>(map));
         }
     }
 
-    public void setUpSeries(List<Map<Integer, Integer>> FXSeries) {
+    public void setUpSeries(List<Map<T1, T2>> FXSeries) {
         this.fxSeries = new ArrayList<>(FXSeries.size());
         this.FXSeriesMaps = FXSeries;
     }
@@ -94,21 +97,19 @@ public abstract class AbstractChartGenerator {
 
     //<editor-fold defaultstate="collapsed" desc="Scene Creator">
     protected void createScene() {
-        /*try {
-         chart = createCustomChart();
-         scene = new Scene(chart);
-         chartFxPanel.setScene(scene);
-         } catch (Exception e) {
-         }*/
-
         try {
             chart = createCustomChart();
             scene = new Scene(chart);
 
+            // Do jaja !!! Dinamičko učitavanje CSS fajla smeštenog u drugom paketu-
+            // Ukoliko se promeni lokacija CSSStyles.java ili CSS.* MORA SE REBUILD-ovati 
+            // i JFXChartGenerators
+            // i OBAVEZNO korisnik(ci) JFXChartGenerators-a tj. ovde, Servis_Radionica !!!
             scene.getStylesheets().add(
-                    AbstractChartGenerator.class
+                    CSSStyles.class
                     .getResource(CSSStyles.getCSSStyle(this.CSSStyle))
-                    .toExternalForm());
+                    .toExternalForm()
+            );
 
             chartFxPanel.setScene(scene);
         } catch (Exception e) {
