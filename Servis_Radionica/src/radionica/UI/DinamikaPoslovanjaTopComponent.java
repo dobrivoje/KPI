@@ -12,8 +12,6 @@ import JFXChartGenerators.Lines.AbstractMonthLineGenerator;
 import JFXChartGenerators.Lines.LineGenerator;
 import com.dobrivoje.utilities.datumi.SrpskiKalendar;
 import com.dobrivoje.utilities.warnings.Display;
-import java.beans.PropertyChangeListener;
-import java.beans.PropertyChangeSupport;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -57,6 +55,8 @@ public final class DinamikaPoslovanjaTopComponent extends TopComponent {
 
     private final Calendar calendar = Calendar.getInstance();
     private int god, mesec;
+    private int prethGod, prethMesec;
+    private boolean godIzmenjen, mesecIzmenjen;
 
     private Lookup.Result<String> kalendarLookup;
     private final AbstractMonthLineGenerator lcgRNKretanje = new LineGenerator();
@@ -69,63 +69,37 @@ public final class DinamikaPoslovanjaTopComponent extends TopComponent {
     //<editor-fold defaultstate="collapsed" desc="Kalendar Bind">
     private String kalendarDatum_bind;
 
-    public static final String PROP_KALENDAR_BIND = "kalendar_bind";
-
-    /**
-     * Get the value of kalendarDatum_bind
-     *
-     * @return the value of kalendarDatum_bind
-     */
     public String getKalendarDatum() {
         return kalendarDatum_bind;
     }
 
-    /**
-     * Set the value of kalendarDatum_bind
-     *
-     * @param kalendar new value of kalendarDatum_bind
-     */
     public void setKalendarDatum(String kalendar) {
-        String oldKalendar_bind = this.kalendarDatum_bind;
         this.kalendarDatum_bind = kalendar;
 
         try {
-            if (kalendar == null) {
-                calendar.setTime(new Date());
+            calendar.setTime(
+                    kalendar == null
+                    ? new Date() : new SimpleDateFormat("yyyy-MM-dd").parse(kalendar));
+
+            if (calendar.get(Calendar.YEAR) != god) {
+                godIzmenjen = true;
+                god = calendar.get(Calendar.YEAR);
             } else {
-                calendar.setTime(new SimpleDateFormat("yyyy-MM-dd").parse(kalendar));
+                godIzmenjen = false;
             }
 
-            god = calendar.get(Calendar.YEAR);
+            if (1 + calendar.get(Calendar.MONTH) != mesec) {
+                mesecIzmenjen = true;
+                mesec = 1 + calendar.get(Calendar.MONTH);
+            } else {
+                mesecIzmenjen = false;
+            }
 
-            // PAZI NA MESEC POČINJE OD NULE !!!
-            mesec = 1 + calendar.get(Calendar.MONTH);
+            prethGod = (mesec == 1 ? god - 1 : god);
+            prethMesec = (mesec == 1 ? 12 : mesec - 1);
+
         } catch (ParseException ex) {
         }
-
-        propertyChangeSupport.firePropertyChange(PROP_KALENDAR_BIND, oldKalendar_bind, kalendar);
-    }
-
-    private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
-
-    /**
-     * Add PropertyChangeListener.
-     *
-     * @param listener
-     */
-    @Override
-    public void addPropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.addPropertyChangeListener(listener);
-    }
-
-    /**
-     * Remove PropertyChangeListener.
-     *
-     * @param listener
-     */
-    @Override
-    public void removePropertyChangeListener(PropertyChangeListener listener) {
-        propertyChangeSupport.removePropertyChangeListener(listener);
     }
     //</editor-fold>
 
@@ -248,17 +222,19 @@ public final class DinamikaPoslovanjaTopComponent extends TopComponent {
     //</editor-fold>
 
     private void setFX_DinamikaFA(int Godina, int Mesec, AbstractMonthLineGenerator lcg) {
-        String tekMesGod = SrpskiKalendar.getMesecNazivLatinica(Mesec) + " " + String.valueOf(Godina);
-        String ukSati = String.valueOf(",  Ukupno " + UKSati(Godina, Mesec)) + " sati.";
+        if (godIzmenjen || mesecIzmenjen) {
+            String tekMesGod = SrpskiKalendar.getMesecNazivLatinica(Mesec) + " " + String.valueOf(Godina);
+            String ukSati = String.valueOf(",  Ukupno " + UKSati(Godina, Mesec)) + " sati.";
 
-        try {
-            lcg.setUpSeries(UKDnevnaFakturisanost(Godina, Mesec));
+            try {
+                lcg.setUpSeries(UKDnevnaFakturisanost(Godina, Mesec));
 
-            lcg.setChartTitle("Dinamika Radnih Sati Servisa");
-            lcg.setSeriesTitles(tekMesGod + ukSati);
-            lcg.createFXObject();
-        } catch (NullPointerException ex) {
-            Display.obavestenjeBaloncic("Greška.", ex.getLocalizedMessage(), Display.TIP_OBAVESTENJA.GRESKA);
+                lcg.setChartTitle("Dinamika Radnih Sati Servisa");
+                lcg.setSeriesTitles(tekMesGod + ukSati);
+                lcg.createFXObject();
+            } catch (NullPointerException ex) {
+                Display.obavestenjeBaloncic("Greška.", ex.getLocalizedMessage(), Display.TIP_OBAVESTENJA.GRESKA);
+            }
         }
     }
 
@@ -270,29 +246,27 @@ public final class DinamikaPoslovanjaTopComponent extends TopComponent {
     }
 
     private void setFX_DinamikaFA_TekIPreth(int Godina, int Mesec, LineGenerator lcg) {
+        if (godIzmenjen || mesecIzmenjen) {
+            String tekMesGod = SrpskiKalendar.getMesecNazivLatinica(Mesec)
+                    + " " + String.valueOf(Godina);
+            String tekUkSati = String.valueOf(",  Ukupno " + UKSati(Godina, Mesec)) + " sati.";
 
-        int m = (Mesec == 1 ? 12 : Mesec - 1);
-        int g = (Mesec == 1 ? Godina - 1 : Godina);
+            String prethMesGod = SrpskiKalendar.getMesecNazivLatinica(prethMesec)
+                    + " " + String.valueOf(prethGod);
+            String prethUkSati = String.valueOf(",  Ukupno " + UKSati(prethGod, prethMesec)) + " sati.";
 
-        String tekMesGod = SrpskiKalendar.getMesecNazivLatinica(Mesec)
-                + " " + String.valueOf(Godina);
-        String tekUkSati = String.valueOf(",  Ukupno " + UKSati(Godina, Mesec)) + " sati.";
+            try {
+                lcg.setUpSeries(
+                        UKDnevnaFakturisanost(Godina, Mesec),
+                        UKDnevnaFakturisanost(prethGod, prethMesec)
+                );
 
-        String prethMesGod = SrpskiKalendar.getMesecNazivLatinica(m)
-                + " " + String.valueOf(g);
-        String prethUkSati = String.valueOf(",  Ukupno " + UKSati(g, m)) + " sati.";
-
-        try {
-            lcg.setUpSeries(
-                    UKDnevnaFakturisanost(Godina, Mesec),
-                    UKDnevnaFakturisanost(g, m)
-            );
-
-            lcg.setChartTitle("Dinamika Radnih Sati Servisa");
-            lcg.setSeriesTitles((tekMesGod + tekUkSati), (prethMesGod + prethUkSati));
-            lcg.createFXObject();
-        } catch (NullPointerException ex) {
-            Display.obavestenjeBaloncic("Greška.", ex.getLocalizedMessage(), Display.TIP_OBAVESTENJA.GRESKA);
+                lcg.setChartTitle("Dinamika Radnih Sati Servisa");
+                lcg.setSeriesTitles((tekMesGod + tekUkSati), (prethMesGod + prethUkSati));
+                lcg.createFXObject();
+            } catch (NullPointerException ex) {
+                Display.obavestenjeBaloncic("Greška.", ex.getLocalizedMessage(), Display.TIP_OBAVESTENJA.GRESKA);
+            }
         }
     }
 }
