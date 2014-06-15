@@ -7,6 +7,7 @@
             <suite-component/>
             <module-dependencies/>
             <public-packages>
+                <package>Utils</package>
                 <package>org.dobrivoje.calendarutilities</package>
                 <package>org.dobrivoje.calendarutilities.exceptions</package>
                 <package>utils</package>
