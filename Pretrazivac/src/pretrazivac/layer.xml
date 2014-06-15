@@ -65,7 +65,6 @@
         </folder>
         <folder name="UndoRedo">
             <file name="org-openide-actions-RedoAction.shadow"/>
-            <file name="org-openide-actions-RedoAction.shadow"/>
         </folder>
     </folder>
     <folder name="Windows2">
