@@ -29,15 +29,11 @@ public class StackedBarGenerator extends AbstractStackedBarGenerator {
 
         xAxis.setLabel(xAxisTitle);
         xAxis.setTickMarkVisible(false);
-        xAxis.setTickLength(xAxis.getTickLength());
-
         xAxis.setCategories(FXCollections.<String>observableArrayList(categories));
 
         yAxis.setLabel(yAxisTitle);
-        yAxis.setTickMarkVisible(false);
-        yAxis.setMinorTickCount(0);
-        yAxis.setTickLength(yAxis.getTickLength());
-        yAxis.setTickUnit(5);
+        yAxis.setTickMarkVisible(true);
+        yAxis.setMinorTickCount(3);
 
         int i = 0;
         XYChart.Series sTmp;

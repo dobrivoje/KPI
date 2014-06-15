@@ -108,13 +108,13 @@ public final class DinamikaPoslovanjaTopComponent extends TopComponent {
         setName(Bundle.CTL_DinamikaPoslovanjaTopComponent());
         setToolTipText(Bundle.HINT_DinamikaPoslovanjaTopComponent());
 
-        lcgRNKretanje.lineChartSetUpPanel(jPanel_UP_LEFT);
+        lcgRNKretanje.setUpChartPanel(jPanel_UP_LEFT);
         lcgRNKretanje.setCSSStyle(CSSStyles.Style.RED_LINE);
 
-        lcgRNKretanjePreth.lineChartSetUpPanel(jPanel_UP_RIGHT);
+        lcgRNKretanjePreth.setUpChartPanel(jPanel_UP_RIGHT);
         lcgRNKretanjePreth.setCSSStyle(CSSStyles.Style.YELLOW_LINE);
 
-        lcgRN.lineChartSetUpPanel(jPanel_UP_DOWN);
+        lcgRN.setUpChartPanel(jPanel_UP_DOWN);
         lcgRN.setCSSStyle(CSSStyles.Style.RED_LINE);
 
         setKalendarDatum(null);
