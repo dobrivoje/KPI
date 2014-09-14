@@ -90,73 +90,43 @@ public final class ManagementPodatakaTopComponent extends TopComponent
     public static final String PROP_KOMPANIJA_BIND = "kompanija_bind";
     private File file;
 
-    /**
-     * Get the value of kompanija_bind
-     *
-     * @return the value of kompanija_bind
-     */
     public Kompanija getKompanija_bind() {
         return kompanija_bind;
     }
 
-    /**
-     * Set the value of kompanija_bind
-     *
-     * @param kompanija_bind new value of kompanija_bind
-     */
     public void setKompanija_bind(Kompanija kompanija_bind) {
         Kompanija oldKompanija_bind = this.kompanija_bind;
         this.kompanija_bind = kompanija_bind;
 
         propertyChangeSupport.firePropertyChange(PROP_KOMPANIJA_BIND, oldKompanija_bind, kompanija_bind);
     }
-//</editor-fold>
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Firma Bind">
     private Firma firma_bind;
 
     public static final String PROP_FIRMA_BIND = "firma_bind";
 
-    /**
-     * Get the value of firma_bind
-     *
-     * @return the value of firma_bind
-     */
     public Firma getFirma_bind() {
         return firma_bind;
     }
 
-    /**
-     * Set the value of firma_bind
-     *
-     * @param firma_bind new value of firma_bind
-     */
     public void setFirma_bind(Firma firma_bind) {
         Firma oldFirma_bind = this.firma_bind;
         this.firma_bind = firma_bind;
         propertyChangeSupport.firePropertyChange(PROP_FIRMA_BIND, oldFirma_bind, firma_bind);
     }
-//</editor-fold>
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="OrgJed Bind">
     private Orgjed orgJed_bind;
 
     public static final String PROP_ORGJED_BIND = "orgJed_bind";
 
-    /**
-     * Get the value of orgJed_bind
-     *
-     * @return the value of orgJed_bind
-     */
     public Orgjed getOrgJed_bind() {
         return orgJed_bind;
     }
 
-    /**
-     * Set the value of orgJed_bind
-     *
-     * @param orgJed_bind new value of orgJed_bind
-     */
     public void setOrgJed_bind(Orgjed orgJed_bind) {
         Orgjed oldOrgJed_bind = this.orgJed_bind;
         this.orgJed_bind = orgJed_bind;
@@ -165,98 +135,58 @@ public final class ManagementPodatakaTopComponent extends TopComponent
 
     private transient final PropertyChangeSupport propertyChangeSupport = new PropertyChangeSupport(this);
 
-    /**
-     * Add PropertyChangeListener.
-     *
-     * @param listener
-     */
     @Override
     public void addPropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.addPropertyChangeListener(listener);
     }
 
-    /**
-     * Remove PropertyChangeListener.
-     *
-     * @param listener
-     */
     @Override
     public void removePropertyChangeListener(PropertyChangeListener listener) {
         propertyChangeSupport.removePropertyChangeListener(listener);
     }
-//</editor-fold>
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Radnik Bind">
     private Radnik radnik_bind;
 
     public static final String PROP_RADNIK_BIND = "radnik_bind";
 
-    /**
-     * Get the value of radnik_bind
-     *
-     * @return the value of radnik_bind
-     */
     public Radnik getRadnik_bind() {
         return radnik_bind;
     }
 
-    /**
-     * Set the value of radnik_bind
-     *
-     * @param radnik_bind new value of radnik_bind
-     */
     public void setRadnik_bind(Radnik radnik_bind) {
         Radnik oldRadnik_bind = this.radnik_bind;
         this.radnik_bind = radnik_bind;
         propertyChangeSupport.firePropertyChange(PROP_RADNIK_BIND, oldRadnik_bind, radnik_bind);
     }
-//</editor-fold>
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="TipRadnika Bind">
     private TipRadnika tipRadnika_bind;
 
     public static final String PROP_TIPRADNIKA_BIND = "tipRadnika_bind";
 
-    /**
-     * Get the value of tipRadnika_bind
-     *
-     * @return the value of tipRadnika_bind
-     */
     public TipRadnika getTipRadnika_bind() {
         return tipRadnika_bind;
     }
 
-    /**
-     * Set the value of tipRadnika_bind
-     *
-     * @param tipRadnika_bind new value of tipRadnika_bind
-     */
     public void setTipRadnika_bind(TipRadnika tipRadnika_bind) {
         TipRadnika oldTipRadnika_bind = this.tipRadnika_bind;
         this.tipRadnika_bind = tipRadnika_bind;
         propertyChangeSupport.firePropertyChange(PROP_TIPRADNIKA_BIND, oldTipRadnika_bind, tipRadnika_bind);
     }
-//</editor-fold>
+    //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="Kalendar Bind">
     private String kalendar_bind;
 
     public final String PROP_KALENDAR = "kalendar";
 
-    /**
-     * Get the value of kalendar_bind
-     *
-     * @return the value of kalendar_bind
-     */
     public String getKalendarDatum() {
         return kalendar_bind;
     }
 
-    /**
-     * Set the value of kalendar_bind
-     *
-     * @param kalendar new value of kalendar_bind
-     */
     public void setKalendarDatum(String kalendar) {
         String oldKalendar = this.kalendar_bind;
         this.kalendar_bind = kalendar;

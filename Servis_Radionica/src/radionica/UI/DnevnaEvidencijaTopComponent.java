@@ -8,9 +8,12 @@ import ERS.queries.ERSQuery;
 import ent.Firma;
 import java.util.Collection;
 import java.util.List;
+import javax.swing.table.TableColumnModel;
 import node_klase.interfejsi.globalrefresh.refreshEvidencijeRadnika;
 import node_klase.radnici.dnevnaevidencija.EvidencijaSvihRadnikaFirmeZaDatumChildFactory;
 import org.netbeans.api.settings.ConvertAsProperties;
+import org.netbeans.swing.etable.ETableColumn;
+import org.netbeans.swing.etable.ETableColumnModel;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.awt.StatusDisplayer;
@@ -50,7 +53,7 @@ import org.openide.windows.TopComponent;
 })
 public final class DnevnaEvidencijaTopComponent extends TopComponent
         implements LookupListener, ExplorerManager.Provider, refreshEvidencijeRadnika {
-
+    
     private Lookup.Result<String> odabraniDatum = null;
     private Lookup.Result<Firma> odabranaFirma = null;
     private String datumLookup;
@@ -63,26 +66,26 @@ public final class DnevnaEvidencijaTopComponent extends TopComponent
     private final ExplorerManager em = new ExplorerManager();
     private LookupListener llKalendar;
     private LookupListener llFirma;
-
+    
     private void evidencijeRadnikaNodeCreation(boolean aktivnaFirma) {
         Firma f;
-
+        
         if (firmaLookup != null) {
             f = firmaLookup;
         } else {
             f = aktivneFirme.iterator().next();
         }
-
+        
         evidencijeRadnikaRefresh(f, datumLookup);
     }
-
+    
     private void evidencijeRadnikaRefresh(Firma firma, String datum) {
         evidencijaChildFactory = new EvidencijaSvihRadnikaFirmeZaDatumChildFactory(firma, datum);
         evidencijaSvihRadnikaZaDanRoot = new AbstractNode(Children.create(evidencijaChildFactory, true));
-
+        
         em.setRootContext(evidencijaSvihRadnikaZaDanRoot);
     }
-
+    
     private void initOutLineViewDnevnaEvidencijeSvihRadnika(String datum) {
         outlineViewDnevnaEvidencijeSvihRadnika.getOutline().setRootVisible(false);
         outlineViewDnevnaEvidencijeSvihRadnika.setPropertyColumns(
@@ -93,9 +96,14 @@ public final class DnevnaEvidencijaTopComponent extends TopComponent
                 "pocStanja", "Početak", "krajStanja", "Kraj",
                 "trajanje", "Trajanje");
 
+        // Sakrij prvu kolonu koja je ima bezveze naziv node-a :
+        TableColumnModel tm = outlineViewDnevnaEvidencijeSvihRadnika.getOutline().getColumnModel();
+        ETableColumn etc = (ETableColumn) tm.getColumn(0);
+        ((ETableColumnModel) tm).setColumnHidden(etc, true);
+        
         evidencijeRadnikaNodeCreation(jCheckBox_AktivneFirme.isSelected());
     }
-
+    
     public DnevnaEvidencijaTopComponent() {
         initComponents();
         setName(Bundle.CTL_DnevnaEvidencijaTopComponent());
@@ -194,16 +202,16 @@ public final class DnevnaEvidencijaTopComponent extends TopComponent
             public void resultChanged(LookupEvent le) {
                 Lookup.Result ls = (Lookup.Result) le.getSource();
                 Collection datumi = ls.allInstances();
-
+                
                 for (Object ds1 : datumi) {
                     datumLookup = (String) ds1;
                 }
-
+                
                 initOutLineViewDnevnaEvidencijeSvihRadnika(datumLookup);
             }
         };
         odabraniDatum.addLookupListener(llKalendar);
-
+        
         odabranaFirma = Utilities.actionsGlobalContext().lookupResult(Firma.class);
         llFirma = new LookupListener() {
             @Override
@@ -212,21 +220,21 @@ public final class DnevnaEvidencijaTopComponent extends TopComponent
                 Collection firme = lr.allInstances();
                 for (Object f : firme) {
                     firmaLookup = (Firma) f;
-
+                    
                     jTextField1.setText(firmaLookup.getNaziv());
                 }
-
+                
                 evidencijeRadnikaRefresh(firmaLookup, datumLookup);
             }
         };
         odabranaFirma.addLookupListener(llFirma);
     }
-
+    
     @Override
     public void componentClosed() {
         odabraniDatum.removeLookupListener(llKalendar);
         odabraniDatum = null;
-
+        
         odabranaFirma.removeLookupListener(llFirma);
         odabranaFirma = null;
     }
@@ -238,12 +246,12 @@ public final class DnevnaEvidencijaTopComponent extends TopComponent
         p.setProperty("version", "1.0");
         // TODO store your settings
     }
-
+    
     void readProperties(java.util.Properties p) {
         String version = p.getProperty("version");
         // TODO read your settings according to their version
     }
-
+    
     @Override
     public void resultChanged(LookupEvent le) {
         throw new UnsupportedOperationException("Not supported yet.");
@@ -254,18 +262,18 @@ public final class DnevnaEvidencijaTopComponent extends TopComponent
     public ExplorerManager getExplorerManager() {
         return em;
     }
-
+    
     @Override
     public void refreshAktivniRadnici() {
         evidencijeRadnikaNodeCreation(true);
     }
-
+    
     @Override
     public void requestActive() {
         refreshAktivniRadnici();
-
+        
         StatusDisplayer.getDefault().setStatusText(
                 firmaLookup == null ? ""
-                : firmaLookup.toString() + ", " + datumLookup.toString());
+                        : firmaLookup.toString() + ", " + datumLookup.toString());
     }
 }
