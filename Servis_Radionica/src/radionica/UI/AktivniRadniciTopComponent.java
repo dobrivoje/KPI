@@ -6,8 +6,11 @@ package radionica.UI;
 
 import ERS.queries.ERSQuery;
 import ent.Firma;
+import javax.swing.table.TableColumnModel;
 import node_klase.radnici.AktivniRadniciFirmeChildFactory;
 import org.netbeans.api.settings.ConvertAsProperties;
+import org.netbeans.swing.etable.ETableColumn;
+import org.netbeans.swing.etable.ETableColumnModel;
 import org.openide.awt.ActionID;
 import org.openide.awt.ActionReference;
 import org.openide.explorer.ExplorerManager;
@@ -76,6 +79,11 @@ public final class AktivniRadniciTopComponent extends TopComponent
                 "prezime", "PREZIME",
                 "grupa", "GRUPA");
 
+        // Sakrij prvu kolonu koja je ima bezveze naziv node-a :
+        TableColumnModel tm = outlineViewAktivniRadnici.getOutline().getColumnModel();
+        ETableColumn etc = (ETableColumn) tm.getColumn(0);
+        ((ETableColumnModel) tm).setColumnHidden(etc, true);
+        
         aktivniRadniciNodeCreation();
     }
 
