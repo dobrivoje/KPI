@@ -152,7 +152,7 @@
                       </Group>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="jSeparator6" min="-2" pref="5" max="-2" attributes="0"/>
-                      <EmptySpace pref="272" max="32767" attributes="0"/>
+                      <EmptySpace pref="296" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -967,7 +967,7 @@
                           <Component id="jButton_ExcelFileOpen1" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="157" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="181" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -1232,9 +1232,9 @@
                                       <Group type="103" groupAlignment="0" attributes="0">
                                           <Component id="jLabel14" min="-2" max="-2" attributes="0"/>
                                           <Group type="102" alignment="0" attributes="0">
-                                              <Component id="jPanel_Klijent1" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jPanel_Klijent1" linkSize="5" min="-2" max="-2" attributes="0"/>
                                               <EmptySpace type="separate" max="-2" attributes="0"/>
-                                              <Component id="jPanel_Barkod" min="-2" max="-2" attributes="0"/>
+                                              <Component id="jPanel_Barkod" linkSize="5" min="-2" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
@@ -1246,24 +1246,27 @@
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Component id="jSeparator3" max="32767" attributes="0"/>
                                   <Group type="102" attributes="0">
-                                      <Component id="jButton_Efikasnost_Radnika_Izvestaj" min="-2" pref="133" max="-2" attributes="0"/>
+                                      <Component id="jButton_Efikasnost_Radnika_Izvestaj" linkSize="7" min="-2" pref="130" max="-2" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Component id="jButton_Barkod" min="-2" pref="134" max="-2" attributes="0"/>
+                                      <Component id="jButton_Barkod" linkSize="7" min="-2" pref="130" max="-2" attributes="0"/>
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel9" min="-2" pref="67" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jTextField_Radnik_Ime" max="32767" attributes="0"/>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Group type="103" groupAlignment="0" attributes="0">
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="jLabel9" min="-2" pref="67" max="-2" attributes="0"/>
+                                                      <EmptySpace max="-2" attributes="0"/>
+                                                      <Component id="jTextField_Radnik_Ime" linkSize="1" min="-2" pref="192" max="-2" attributes="0"/>
+                                                  </Group>
+                                                  <Group type="102" alignment="0" attributes="0">
+                                                      <Component id="jLabel10" min="-2" pref="67" max="-2" attributes="0"/>
+                                                      <EmptySpace min="-2" max="-2" attributes="0"/>
+                                                      <Component id="jTextField_Radnik_Prezime" linkSize="1" min="-2" pref="192" max="-2" attributes="0"/>
+                                                  </Group>
                                               </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel10" min="-2" pref="67" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="jTextField_Radnik_Prezime" min="-2" pref="192" max="-2" attributes="0"/>
-                                              </Group>
+                                              <EmptySpace min="160" pref="160" max="-2" attributes="0"/>
                                           </Group>
                                           <Group type="102" alignment="0" attributes="0">
                                               <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -1275,12 +1278,12 @@
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="jLabel11" min="-2" pref="67" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jTextField_Radnik_OrgJed" min="-2" pref="192" max="-2" attributes="0"/>
+                                                      <Component id="jTextField_Radnik_OrgJed" linkSize="1" min="-2" pref="192" max="-2" attributes="0"/>
                                                   </Group>
                                                   <Group type="102" alignment="0" attributes="0">
                                                       <Component id="jLabel12" min="-2" pref="67" max="-2" attributes="0"/>
                                                       <EmptySpace max="-2" attributes="0"/>
-                                                      <Component id="jTextField_Radnik_TipRadnika" min="-2" pref="192" max="-2" attributes="0"/>
+                                                      <Component id="jTextField_Radnik_TipRadnika" linkSize="1" min="-2" pref="192" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                               <EmptySpace min="-2" max="-2" attributes="0"/>
@@ -1290,7 +1293,7 @@
                                                       <EmptySpace max="-2" attributes="0"/>
                                                       <Component id="jCheckBox_Radnik_Radnik" min="-2" max="-2" attributes="0"/>
                                                   </Group>
-                                                  <Component id="jComboBox_RADNICI_OrgJed" alignment="0" pref="154" max="32767" attributes="0"/>
+                                                  <Component id="jComboBox_RADNICI_OrgJed" alignment="0" max="32767" attributes="0"/>
                                                   <Component id="jComboBox_RADNICI_TipRadnika" max="32767" attributes="0"/>
                                               </Group>
                                           </Group>
@@ -1299,7 +1302,7 @@
                                       <Component id="jPanel4" min="-2" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
+                              <EmptySpace min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -1314,29 +1317,29 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jTextField_Radnik_Ime" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextField_Radnik_Ime" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jTextField_Radnik_Prezime" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextField_Radnik_Prezime" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jTextField_Radnik_OrgJed" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextField_Radnik_OrgJed" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jComboBox_RADNICI_OrgJed" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace min="-2" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jTextField_Radnik_TipRadnika" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextField_Radnik_TipRadnika" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jComboBox_RADNICI_TipRadnika" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="jTextField_Radnik_Sifra_INFSISTEM" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jTextField_Radnik_Sifra_INFSISTEM" linkSize="2" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jCheckBox_Radnik_Aktivan" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="jCheckBox_Radnik_Radnik" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -1350,8 +1353,8 @@
                       <Component id="jLabel_Naslov4" min="-2" pref="18" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="jPanel_Barkod" max="32767" attributes="0"/>
-                          <Component id="jPanel_Klijent1" max="32767" attributes="0"/>
+                          <Component id="jPanel_Barkod" linkSize="6" max="32767" attributes="0"/>
+                          <Component id="jPanel_Klijent1" linkSize="6" max="32767" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="8" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -1494,9 +1497,9 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                              <Component id="jButton_RADNIK_Novi" max="32767" attributes="0"/>
-                              <Component id="jButton_RADNIK_IzmenaPodataka" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jButton_RADNIK_Brisanje" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jButton_RADNIK_Novi" linkSize="3" max="32767" attributes="0"/>
+                              <Component id="jButton_RADNIK_IzmenaPodataka" linkSize="3" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jButton_RADNIK_Brisanje" linkSize="3" alignment="0" max="32767" attributes="0"/>
                           </Group>
                           <EmptySpace pref="13" max="32767" attributes="0"/>
                       </Group>
@@ -1506,11 +1509,11 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                          <Component id="jButton_RADNIK_Novi" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton_RADNIK_Novi" linkSize="4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton_RADNIK_IzmenaPodataka" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton_RADNIK_IzmenaPodataka" linkSize="4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jButton_RADNIK_Brisanje" min="-2" max="-2" attributes="0"/>
+                          <Component id="jButton_RADNIK_Brisanje" linkSize="4" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -1611,7 +1614,6 @@
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="buttonGroup_Barkod"/>
                     </Property>
-                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="servis/manager/Bundle.properties" key="ManagementPodatakaTopComponent.jRadioButton_Barkod_Radnici.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
@@ -1660,7 +1662,7 @@
                                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <EmptySpace min="0" pref="1" max="32767" attributes="0"/>
                                   <Component id="jRadioButton_Radnik_Clocking" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
@@ -1686,7 +1688,6 @@
                     <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
                       <ComponentRef name="buttonGroup_Radnik_Izvestaj"/>
                     </Property>
-                    <Property name="selected" type="boolean" value="true"/>
                     <Property name="text" type="java.lang.String" editor="org.netbeans.modules.i18n.form.FormI18nStringEditor">
                       <ResourceString bundle="servis/manager/Bundle.properties" key="ManagementPodatakaTopComponent.jRadioButton_Radnik_Clocking.text" replaceFormat="org.openide.util.NbBundle.getMessage({sourceFileName}.class, &quot;{key}&quot;)"/>
                     </Property>
